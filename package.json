@@ -1,0 +1,11 @@
+{
+  "name": "d162-wms",
+  "version": "0.1.0",
+  "description": "D162 Implementation for OGC Testbed 14",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Badger <jpbadger@ucalgary.ca>",
+  "license": "ISC"
+}
