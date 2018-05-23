@@ -6,6 +6,8 @@ A WMS that implements the conceptual model from D160. This demonstrates that the
 
 TODO: How to use this server, and a link to a production server
 
+Note: When adding the server to QGIS, make sure "Ignore GetMap/GetTile URI reported in capabilities" is checked.
+
 ## Deployment to Production Server
 
 TODO: Explain how to deploy this service to an internet-facing server
