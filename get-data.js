@@ -4,6 +4,9 @@ const fs     = require('fs');
 const http   = require('http');
 const https  = require('https');
 const moment = require('moment');
+const rimraf = require('rimraf');
+const tmp    = require('tmp');
+const unzip  = require('unzip');
 const URL    = require('url');
 
 const data = require('./data.json');
@@ -70,9 +73,71 @@ function download(uri, filepath) {
   request.end();
 }
 
+// Unpack the archive.
+// Be smart about extracting archives of files, and put them in a directory, and
+// don't double-nest directories if we don't have to.
+function extract(archive) {
+  // determine archive type
+  switch(path.extname(archive)) {
+    case '.zip':
+    extractZIP(archive);
+    default:
+    console.warn(`No extraction handler implemented for ${archive}`);
+  }
+}
+
+function extractZIP(archive) {
+  tmp.tmpName({ dir: "data" }, (tmpErr, tmpPath) => {
+    if (tmpErr) {
+      throw tmpErr;
+    }
+
+    fs.mkdir(tmpPath, (mkdirErr) => {
+      if (mkdirErr) {
+        throw mkdirErr;
+      }
+
+      console.log(`Extracting ${archive}`);
+      let extraction = fs.createReadStream(archive)
+        .pipe(unzip.Extract({ path: tmpPath }));
+
+      extraction.on('close', () => {
+        // If tmp directory contains only one directory, then move that to
+        // the data directory. Otherwise rename the tmp directory to be the
+        // named extraction directory.
+        fs.readdir(tmpPath, (readdirErr, files) => {
+          if (readdirErr) {
+            throw readdirErr;
+          }
+
+          if (files.length == 1) {
+            console.log(`Moving extracted directory`);
+            fs.rename(tmpPath + '/' + files[0], "data/" + files[0], (renameErr) => {
+              if (renameErr) {
+                throw renameErr;
+              }
+              rimraf.sync(tmpPath);
+            });
+          } else {
+            console.log(`Renaming extracted directory`);
+            let archiveName = "data/" + path.basename(archive, '.zip');
+            rimraf.sync(archiveName);
+            fs.rename(tmpPath, archiveName, (renameErr) => {
+              if (renameErr) {
+                throw renameErr;
+              }
+            });
+          }
+        });
+      });
+    })
+  });
+}
+
 data.forEach((datum) => {
   let filename = path.basename(datum.src);
   let filepath = "data/" + filename;
 
   download(datum.src, filepath);
+  extract(filepath);
 });
