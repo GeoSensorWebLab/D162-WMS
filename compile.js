@@ -1,7 +1,7 @@
 // Compile all MML files to Mapnik XML stylesheets
 const carto = require('carto');
-const fs = require('fs');
-const path = require('path');
+const fs    = require('fs');
+const path  = require('path');
 
 const stylesDir = 'styles';
 
@@ -25,6 +25,17 @@ fs.readdir(stylesDir, (err, files) => {
       }
 
       let output = new carto.Renderer({ filename: mmlPath }).render(mmlData);
+
+      if (output.msg) {
+        output.msg.forEach((v) => {
+          if (v.type === 'error') {
+              console.error(carto.Util.getMessageToPrint(v));
+          } else if (v.type === 'warning') {
+              console.warn(carto.Util.getMessageToPrint(v));
+          }
+        });
+      }
+
       let basename = path.basename(mmlPath, ".mml");
       fs.writeFileSync(path.join(stylesDir, `${basename}.xml`), output.data);
     });
