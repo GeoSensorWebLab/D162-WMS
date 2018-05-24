@@ -16,34 +16,43 @@ function download(uri, filepath) {
     scheme = http;
   }
 
-  let file = fs.createWriteStream(filepath, { autoClose: true });
+  let file = fs.createWriteStream(filepath);
   let fileprogress = 0;
   let filetotal = 1;
   let request = scheme.request({
-      method: 'GET',
-      hostname: url.hostname,
-      path: url.pathname
-    }, (response) => {
-      console.log(response.statusCode);
-      console.log(response.headers);
+    method: 'GET',
+    hostname: url.hostname,
+    path: url.pathname
+  }, (response) => {
+    console.log(response.statusCode);
+    console.log(response.headers);
 
-      // Handle redirects
-      if (response.statusCode >= 300 && response.statusCode < 400 && response.headers['location'] !== undefined) {
-        console.log("Following redirect");
-        fs.unlinkSync(filepath);
-        download(response.headers['location'], filepath);
-      } else {
-        // Print file download progress
-        filetotal = parseInt(response.headers['content-length']);
-        response.on('data', (chunk) => {
-          fileprogress += chunk.length;
-          let progress = 100 * fileprogress / filetotal;
-          process.stdout.write(`${fileprogress}B/${filetotal}B ${progress.toFixed(1)}%\r`);
-        });
+    // Handle redirects
+    if (response.statusCode >= 300 && response.statusCode < 400 && response.headers['location'] !== undefined) {
+      console.log("Following redirect");
+      fs.unlinkSync(filepath);
+      download(response.headers['location'], filepath);
+    } else {
+      // Print file download progress
+      filetotal = parseInt(response.headers['content-length']);
+      response.on('data', (chunk) => {
+        fileprogress += chunk.length;
+        let progress = 100 * fileprogress / filetotal;
+        process.stdout.write(`${fileprogress}B/${filetotal}B ${progress.toFixed(1)}%\r`);
+      });
 
-        response.pipe(file);
-      }
-    });
+      // File download is finished; update the file modification date to match
+      // the "last-modified" HTTP header for caching purposes.
+      response.on('end', () => {
+        file.end();
+        console.log("\nDownload Complete.");
+        let moddate = new Date(response.headers['last-modified']);
+        fs.utimesSync(filepath, moddate, moddate);
+      });
+
+      response.pipe(file);
+    }
+  });
 
   request.on('error', (err) => {
     fs.unlinkSync(filepath);
