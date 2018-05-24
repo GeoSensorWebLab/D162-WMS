@@ -37,7 +37,7 @@ Layer:
     geometry: polygon
     <<: *extents
     Datasource:
-      file: data/10m_physical/ne_1m_land.shp
+      file: ../data/10m_physical/ne_10m_land.shp
       type: shape
     properties:
       maxzoom: 20
