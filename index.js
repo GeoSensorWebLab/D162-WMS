@@ -1,15 +1,15 @@
-var express = require('express');
-var fs      = require('fs');
-var wms     = require('wms');
+const express = require('express');
+const fs      = require('fs');
+const wms     = require('./src/wms111');
 
-var app = express();
+let app = express();
 
-var fakeTile = fs.readFileSync('grad.png');
-var fakeHeaders = {
+let fakeTile = fs.readFileSync('grad.png');
+let fakeHeaders = {
   'content-type': 'image/png'
 };
 
-var service = {
+let service = {
   title: 'D162 WMS',
   abstract: 'WMS implementation for D162',
   host: 'http://localhost:3000',
@@ -17,11 +17,12 @@ var service = {
     {
       title: 'Sample',
       name: 'sample',
-      bbox: [-106.787109375, 25.8394494020632,
-          -93.427734375, 36.6331620955865],
+      bbox: [-180, -85,
+          180, 85],
       range: [0, 20],
       image: ['png'],
-      getTile: (zoom, x, y, callback) => {
+      getTile: (zoom, x, y, params, callback) => {
+        console.log(params);
         process.nextTick(callback, null, fakeTile, fakeHeaders);
       }
     }
