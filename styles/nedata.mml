@@ -35,7 +35,7 @@ Stylesheet:
 Layer:
   - id: world
     geometry: polygon
-    <<: *extents
+    <<: *extents84
     Datasource:
       file: ../data/10m_physical/ne_10m_land.shp
       type: shape
