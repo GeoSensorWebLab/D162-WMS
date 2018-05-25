@@ -20,6 +20,15 @@ class MapnikStyle {
   // Returns a Promise that resolves with a buffer containing the image, or
   // rejects with an error.
   renderImage(options) {
+    // Mapnik has these limits for image dimensions
+    if (options.width > 65535) {
+      options.width = 65535;
+    }
+
+    if (options.height > 65535) {
+      options.height = 65535;
+    }
+
     return new Promise((resolve, reject) => {
       try {
         this.map.resize(options.width, options.height);
