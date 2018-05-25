@@ -2,7 +2,7 @@
 const builder = require('xmlbuilder');
 const mapnik  = require('mapnik');
 
-const validRequests = ['getcapabilities', 'getmap'];
+const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
 // Generate a GetCapabilities document based on the given configuration
 function GetCapabilities(config) {
@@ -196,6 +196,13 @@ const wms = function(config, query) {
         headers: { "Content-Type": "text/plain" },
         code: 400,
         data: "Bad Request - invalid request parameter"
+      });
+      } else if (query.REQUEST.toLowerCase() === "capabilities") {
+      console.log("capabilities");
+      resolve({
+        headers: { "Content-Type": "application/vnd.ogc.wms_xml" },
+        code: 200,
+        data: GetCapabilities(config)
       });
     } else if (query.REQUEST.toLowerCase() === "getcapabilities") {
       console.log("GetCapabilities");
