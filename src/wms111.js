@@ -71,7 +71,7 @@ function GetCapabilitiesLayers(config) {
   let xml = builder.begin();
 
   config.layers.forEach((layer) => {
-    xml.ele('Layer')
+    let baseLayer = xml.ele('Layer')
       .ele('Name', layer.name).up()
       .ele('Title', layer.title).up()
       .ele('SRS', 'EPSG:3857').up()
@@ -80,15 +80,20 @@ function GetCapabilitiesLayers(config) {
         "miny": layer.bbox[1],
         "maxx": layer.bbox[2],
         "maxy": layer.bbox[3]
-      }).up()
-      .ele('BoundingBox', {
-        "srs": layer.srs,
-        "minx": layer.extent[0],
-        "miny": layer.extent[1],
-        "maxx": layer.extent[2],
-        "maxy": layer.extent[3]
-      }).up()
-      .ele('Layer')
+      }).up();
+
+    layer.bounds.forEach((extent) => {
+      baseLayer.ele('BoundingBox', {
+        "srs": extent.srs,
+        "minx": extent.bbox[0],
+        "miny": extent.bbox[1],
+        "maxx": extent.bbox[2],
+        "maxy": extent.bbox[3]
+      });
+    });
+
+      // Sub-layers
+      baseLayer.ele('Layer')
         .ele('Name', layer.name).up()
         .ele('Title', layer.title).up();
   });

@@ -12,11 +12,14 @@ let service = {
     {
       title: 'Sample',
       name: 'sample',
-      bbox: [-180, -85,
-              180, 85],
-      extent: [-20026376.39, -20048966.10, 20026376.39, 20048966.10],
-      srs: 'EPSG:3857',
+      bbox: [-180, -85, 180, 85],
       range: [0, 20],
+      // An extent object is required for each projection supported.
+      // The bbox should be in the coordinates of the SRS.
+      bounds: [{
+        srs: 'EPSG:3857',
+        bbox: [-20026376.39, -20048966.10, 20026376.39, 20048966.10]
+      }],
       image: ['png'],
       // Return a buffer
       getMap: (params) => {
