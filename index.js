@@ -1,14 +1,8 @@
 const express     = require('express');
-const fs          = require('fs');
 const MapnikStyle = require('./src/mapnik_style');
 const wms         = require('./src/wms111');
 
 let app = express();
-
-let fakeTile = fs.readFileSync('grad.png');
-let fakeHeaders = {
-  'content-type': 'image/png'
-};
 
 let service = {
   title: 'D162 WMS',
