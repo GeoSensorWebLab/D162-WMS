@@ -15,7 +15,7 @@ function GetCapabilities(config) {
   })
   .att({ version: '1.1.1' })
   .ele('Service')
-    .ele('Name', config.title.toLowerCase().replace(/ /, '-')).up()
+    .ele('Name', 'OGC:WMS').up()
     .ele('Title', config.title).up()
     .ele('Abstract', config.abstract).up()
     .ele('OnlineResource', {
