@@ -21,9 +21,7 @@ let service = {
           180, 85],
       range: [0, 20],
       image: ['png'],
-      getTile: (zoom, x, y, params, callback) => {
-        console.log(params);
-        process.nextTick(callback, null, fakeTile, fakeHeaders);
+      getMap: () => {
       }
     }
   ]
