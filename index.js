@@ -1,7 +1,7 @@
-const express      = require('express');
-const fs           = require('fs');
-const MapnikRender = require('./src/mapnik_render');
-const wms          = require('./src/wms111');
+const express     = require('express');
+const fs          = require('fs');
+const MapnikStyle = require('./src/mapnik_style');
+const wms         = require('./src/wms111');
 
 let app = express();
 
@@ -26,7 +26,7 @@ let service = {
       image: ['png'],
       // Return a buffer
       getMap: (params) => {
-        let style = new MapnikRender('styles/nedata.xml');
+        let style = new MapnikStyle('styles/nedata.xml');
         return style.renderImage({
           width: parseInt(params.WIDTH),
           height: parseInt(params.HEIGHT),

@@ -4,7 +4,7 @@ const mapnik = require('mapnik');
 mapnik.register_default_fonts();
 mapnik.register_default_input_plugins();
 
-class MapnikRender {
+class MapnikStyle {
   constructor(stylesheetPath) {
     this.stylesheetPath = stylesheetPath;
     this.map = new mapnik.Map(256, 256);
@@ -41,4 +41,4 @@ class MapnikRender {
   }
 }
 
-module.exports = MapnikRender;
+module.exports = MapnikStyle;
