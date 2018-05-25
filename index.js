@@ -15,6 +15,37 @@ let fakeHeaders = {
   'content-type': 'image/png'
 };
 
+// Read a Mapnik XML stylesheet from a path, and use options to generate an
+// image. Options:
+// * bbox   - array of four floats delineating region to render
+// * format - MIME type of output
+// * height - pixel height of output image
+// * srs    - PROJ4 style projection definition of output map (geographic, not screen)
+// * width  - pixel width of output image
+//
+// Returns a Promise that resolves with a buffer containing the image, or
+// rejects with an error.
+function mapnikRender(stylesheetPath, options) {
+  let map = new mapnik.Map(options.width, options.height);
+
+  return new Promise((resolve, reject) => {
+    map.load(stylesheetPath, (err, map) => {
+      if (err) reject(err);
+
+      map.zoomToBox(options.bbox);
+      let image = new mapnik.Image(options.width, options.height);
+
+      map.render(image, (err, image) => {
+        if (err) reject(err);
+        image.encode('png', (err, buffer) => {
+            if (err) reject(err);
+            resolve(buffer);
+        });
+      });
+    });
+  });
+}
+
 let service = {
   title: 'D162 WMS',
   abstract: 'WMS implementation for D162',
@@ -31,36 +62,11 @@ let service = {
       image: ['png'],
       // Return a buffer
       getMap: (params) => {
-        let width = parseInt(params.WIDTH);
-        let height = parseInt(params.HEIGHT);
-        let map = new mapnik.Map(width, height);
-
-        let bboxSRS = params.SRS;
-        let bbox = params.BBOX.split(',').map((item) => {
-          return parseFloat(item);
-        });
-
-        return new Promise((resolve, reject) => {
-          map.load('styles/nedata.xml', (err,map) => {
-            if (err) reject(err);
-
-            // Transform request bounding box to map SRS
-            // Something goes wrong here and the results get wrapped incorrectly
-            let new_sw = proj4(bboxSRS, map.srs, [bbox[0], bbox[1]]);
-            let new_ne = proj4(bboxSRS, map.srs, [bbox[2], bbox[3]]);
-            let newbbox = [new_sw[0], new_sw[1], new_ne[0], new_ne[1]];
-
-            map.zoomToBox(newbbox);
-
-            var im = new mapnik.Image(width, height);
-            map.render(im, (err,im) => {
-              if (err) reject(err);
-              im.encode('png', (err,buffer) => {
-                  if (err) reject(err);
-                  resolve(buffer);
-              });
-            });
-          });
+        return mapnikRender('styles/nedata.xml', {
+          width: parseInt(params.WIDTH),
+          height: parseInt(params.HEIGHT),
+          bbox: params.BBOX.split(',').map(parseFloat),
+          srs: params.SRS
         });
       }
     }
