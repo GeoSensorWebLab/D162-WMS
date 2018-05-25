@@ -23,6 +23,7 @@ function GetCapabilities(config) {
       "xlink:type": "simple",
       "xlink:href": config.host
     }).up()
+    .up()
   .ele('Capability')
     .ele('Request')
       .ele('GetCapabilities')
@@ -99,7 +100,7 @@ function GetCapabilitiesLayers(config) {
 
     layer.bounds.forEach((extent) => {
       baseLayer.ele('BoundingBox', {
-        "srs": extent.srs,
+        "SRS": extent.srs,
         "minx": extent.bbox[0],
         "miny": extent.bbox[1],
         "maxx": extent.bbox[2],
