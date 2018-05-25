@@ -31,13 +31,27 @@ class MapnikStyle {
 
         map.render(image, (err, image) => {
           if (err) reject(err);
-          image.encode('png', (err, buffer) => {
+          image.encode(this.formatForMIME(options.format), (err, buffer) => {
               if (err) reject(err);
               resolve(buffer);
           });
         });
       });
     });
+  }
+
+  // Convert a MIME type into a format for Mapnik's image encode
+  formatForMIME(type) {
+    switch(type) {
+      case 'image/png':
+      return 'png';
+      break;
+      case 'image/jpeg':
+      return 'jpg';
+      break;
+      default:
+      throw 'Unhandled MIME type ' + type;
+    }
   }
 }
 

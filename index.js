@@ -28,6 +28,7 @@ let service = {
       getMap: (params) => {
         let style = new MapnikStyle('styles/nedata.xml');
         return style.renderImage({
+          format: params.FORMAT,
           width:  parseInt(params.WIDTH),
           height: parseInt(params.HEIGHT),
           bbox:   params.BBOX.split(',').map(parseFloat),
