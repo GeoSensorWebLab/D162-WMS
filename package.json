@@ -1,6 +1,6 @@
 {
   "name": "d162-wms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "D162 Implementation for OGC Testbed 14",
   "main": "index.js",
   "scripts": {
