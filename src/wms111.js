@@ -34,7 +34,7 @@ function GetCapabilities(config) {
               .ele('OnlineResource', {
                 "xmlns:xlink": "http://www.w3.org/1999/xlink",
                 "xlink:type": "simple",
-                "xlink:href": config.host + '/service'
+                "xlink:href": config.host + '/service?'
               }).up()
               .up()
             .up()
@@ -76,7 +76,7 @@ function GetCapabilitiesGetMap(config) {
         .ele('OnlineResource', {
           "xmlns:xlink": "http://www.w3.org/1999/xlink",
           "xlink:type": "simple",
-          "xlink:href": config.host + '/service'
+          "xlink:href": config.host + '/service?'
         });
 
   return xml.root();
