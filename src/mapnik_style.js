@@ -20,22 +20,35 @@ class MapnikStyle {
   // Returns a Promise that resolves with a buffer containing the image, or
   // rejects with an error.
   renderImage(options) {
-    this.map.resize(options.width, options.height);
-
     return new Promise((resolve, reject) => {
+      try {
+        this.map.resize(options.width, options.height);
+      }
+      catch (e) {
+        reject(e);
+      }
+
       this.map.load(this.stylesheetPath, (err, map) => {
         if (err) reject(err);
 
         map.zoomToBox(options.bbox);
-        let image = new mapnik.Image(options.width, options.height);
+        let image;
+        try {
+          image = new mapnik.Image(options.width, options.height);
+        }
+        catch (e) {
+          reject(e);
+        }
 
-        map.render(image, (err, image) => {
-          if (err) reject(err);
-          image.encode(this.formatForMIME(options.format), (err, buffer) => {
-              if (err) reject(err);
-              resolve(buffer);
+        if (image !== undefined) {
+          map.render(image, (err, image) => {
+            if (err) reject(err);
+            image.encode(this.formatForMIME(options.format), (err, buffer) => {
+                if (err) reject(err);
+                resolve(buffer);
+            });
           });
-        });
+        }
       });
     });
   }
