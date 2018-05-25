@@ -23,7 +23,6 @@ function GetCapabilities(config) {
       "xlink:type": "simple",
       "xlink:href": config.host
     }).up()
-    .up()
   .ele('Capability')
     .ele('Request')
       .ele('GetCapabilities')
@@ -40,21 +39,7 @@ function GetCapabilities(config) {
             .up()
           .up()
         .up()
-      .ele('GetMap')
-        .ele('Format', 'image/png').up()
-        .ele('DCPType')
-          .ele('HTTP')
-            .ele('Get')
-              .ele('OnlineResource', {
-                "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                "xlink:type": "simple",
-                "xlink:href": config.host + '/service'
-              }).up()
-              .up()
-            .up()
-          .up()
-        .up()
-      .up()
+      .importDocument(GetCapabilitiesGetMap(config)).up()
     .ele('Exception')
       .ele('Format', 'application/vnd.ogc.se_xml').up()
       .ele('Format', 'application/vnd.ogc.se_inimage').up()
@@ -64,6 +49,36 @@ function GetCapabilities(config) {
   .end({ pretty: true });
 
   return xml;
+}
+
+// Generate a subsection for the GetMap requests
+function GetCapabilitiesGetMap(config) {
+  let xml = builder.begin().ele('GetMap');
+
+  // Add supported formats
+  let formats = [];
+  config.layers.forEach((layer) => {
+    layer.formats.forEach((format) => {
+      if (!formats.includes(format)) {
+        formats.push(format);
+      }
+    });
+  });
+
+  formats.forEach((format) => {
+    xml.ele('Format', format);
+  });
+
+  xml.ele('DCPType')
+    .ele('HTTP')
+      .ele('Get')
+        .ele('OnlineResource', {
+          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+          "xlink:type": "simple",
+          "xlink:href": config.host + '/service'
+        });
+
+  return xml.root();
 }
 
 // Generate the Layer(s) subsection for all layers defined in `config`
