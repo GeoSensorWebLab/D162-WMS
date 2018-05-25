@@ -39,7 +39,7 @@ let service = {
   ]
 };
 
-app.get('/service', (req, res) => {
+app.get(/\/service\??/, (req, res) => {
   wms(service, req.query).then((wmsResponse) => {
     res.set(wmsResponse.headers);
     res.status(wmsResponse.code);
