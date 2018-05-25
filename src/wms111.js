@@ -185,13 +185,7 @@ const wms = function(config, query) {
   let response = new Promise((resolve, reject) => {
 
     // Check for invalid parameters
-    if (query.SERVICE !== "WMS") {
-      resolve({
-        headers: { "Content-Type": "text/plain" },
-        code: 400,
-        data: "Bad Request - invalid service parameter"
-      });
-    } else if (query.REQUEST === undefined || !validRequests.includes(query.REQUEST.toLowerCase())) {
+    if (query.REQUEST === undefined || !validRequests.includes(query.REQUEST.toLowerCase())) {
       resolve({
         headers: { "Content-Type": "text/plain" },
         code: 400,
