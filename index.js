@@ -1,6 +1,12 @@
 const express = require('express');
 const fs      = require('fs');
+const mapnik  = require('mapnik');
+const proj4   = require('proj4');
 const wms     = require('./src/wms111');
+
+// register fonts and datasource plugins
+mapnik.register_default_fonts();
+mapnik.register_default_input_plugins();
 
 let app = express();
 
@@ -21,7 +27,39 @@ let service = {
           180, 85],
       range: [0, 20],
       image: ['png'],
-      getMap: () => {
+      // Return a buffer
+      getMap: (params) => {
+        let width = parseInt(params.WIDTH);
+        let height = parseInt(params.HEIGHT);
+        let map = new mapnik.Map(width, height);
+
+        let bboxSRS = params.SRS;
+        let bbox = params.BBOX.split(',').map((item) => {
+          return parseFloat(item);
+        });
+
+        return new Promise((resolve, reject) => {
+          map.load('styles/nedata.xml', (err,map) => {
+            if (err) reject(err);
+
+            // Transform request bounding box to map SRS
+            // Something goes wrong here and the results get wrapped incorrectly
+            let new_sw = proj4(bboxSRS, "EPSG:4326", [bbox[0], bbox[1]]);
+            let new_ne = proj4(bboxSRS, "EPSG:4326", [bbox[2], bbox[3]]);
+            let newbbox = [new_sw[0], new_sw[1], new_ne[0], new_ne[1]];
+
+            map.zoomToBox(newbbox);
+
+            var im = new mapnik.Image(width, height);
+            map.render(im, (err,im) => {
+              if (err) reject(err);
+              im.encode('png', (err,buffer) => {
+                  if (err) reject(err);
+                  resolve(buffer);
+              });
+            });
+          });
+        });
       }
     }
   ]
