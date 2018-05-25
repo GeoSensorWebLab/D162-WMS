@@ -81,6 +81,13 @@ function GetCapabilitiesLayers(config) {
         "maxx": layer.bbox[2],
         "maxy": layer.bbox[3]
       }).up()
+      .ele('BoundingBox', {
+        "srs": layer.srs,
+        "minx": layer.extent[0],
+        "miny": layer.extent[1],
+        "maxx": layer.extent[2],
+        "maxy": layer.extent[3]
+      }).up()
       .ele('Layer')
         .ele('Name', layer.name).up()
         .ele('Title', layer.title).up();

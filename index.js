@@ -24,7 +24,9 @@ let service = {
       title: 'Sample',
       name: 'sample',
       bbox: [-180, -85,
-          180, 85],
+              180, 85],
+      extent: [-20026376.39, -20048966.10, 20026376.39, 20048966.10],
+      srs: 'EPSG:3857',
       range: [0, 20],
       image: ['png'],
       // Return a buffer
@@ -44,8 +46,8 @@ let service = {
 
             // Transform request bounding box to map SRS
             // Something goes wrong here and the results get wrapped incorrectly
-            let new_sw = proj4(bboxSRS, "EPSG:4326", [bbox[0], bbox[1]]);
-            let new_ne = proj4(bboxSRS, "EPSG:4326", [bbox[2], bbox[3]]);
+            let new_sw = proj4(bboxSRS, map.srs, [bbox[0], bbox[1]]);
+            let new_ne = proj4(bboxSRS, map.srs, [bbox[2], bbox[3]]);
             let newbbox = [new_sw[0], new_sw[1], new_ne[0], new_ne[1]];
 
             map.zoomToBox(newbbox);
