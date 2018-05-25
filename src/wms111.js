@@ -169,7 +169,19 @@ function validateGetMap(config, query) {
   });
 }
 
+// Convert all query parameter keys to UPPERCASE
+function cleanParams(params) {
+  let newParams = {};
+  Object.entries(params).forEach((pair) => {
+    newParams[pair[0].toUpperCase()] = pair[1];
+  });
+
+  return newParams;
+}
+
 const wms = function(config, query) {
+  query = cleanParams(query);
+
   let response = new Promise((resolve, reject) => {
 
     // Check for invalid parameters
