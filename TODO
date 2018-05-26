@@ -1,0 +1,6 @@
+- implement real error messages, not plain text ones
+- test that serving other projections works
+- test that serving JPEGs works
+- test with other WMS clients
+- find the conformance level against ets-wms11
+- wms 1.3.0 support?
