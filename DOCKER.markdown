@@ -39,13 +39,19 @@ If you have not used Docker, I recommend reading the "[Getting Started with Dock
 
 The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
 
+An application for previewing CartoCSS, [kosmtik][], can be ran in Docker to edit the stylesheets on your host machine and see the changes update automatically:
+
 ```sh
 $ docker build . -t geosensorweblab/d162-wms
 $ docker run -it --init --rm -v "$PWD/styles":/app/styles -v "$PWD/data":/app/data -p 6789:6789 geosensorweblab/d162-wms /app/node_modules/.bin/kosmtik serve styles/nedata.mml
 ```
 
-A server will be created in the container and is accessible on localhost port 6789: http://localhost:6789.
+A server will be created in the container and is accessible on localhost port 6789: http://localhost:6789. Open that in your browser to preview the map.
 
+Note: Unlike [TileMill][] (which is abandonware), kosmtik does not have an integrated stylesheet editor.
+
+[kosmtik]: https://github.com/kosmtik/kosmtik
+[TileMill]: https://github.com/tilemill-project/tilemill
 
 ## Deploying D162 WMS Implementation using Docker
 
