@@ -16,6 +16,8 @@ TODO: Explain how to deploy this service to an internet-facing server
 
 This app is built on Node.js and Mapnik. You *may* need to install Mapnik development libraries for your OS separately.
 
+You can set up the development environment using Docker, if you prefer; please see `DOCKER.markdown` for instructions. If you are running under Windows, that method may be preferred as it will manage your Node/NPM/GDAL versions for you.
+
 Start by downloading and installing the latest stable version of [Node.js][]. Then use Git to clone this repository from GitHub, or download an archive of this repository.
 
 ```sh
