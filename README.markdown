@@ -93,7 +93,7 @@ Or for Docker:
 $ docker run -it --rm -v "$PWD/styles":/app/styles geosensorweblab/d162-wms node compile.js
 ```
 
-To set up live refresh of the stylesheets, use kosmtik to set up a testing server. In the following examples the CartoCSS project is named `styles/nedat.mml`; for a different stylesheet, pass in the path to it instead. For Docker users, only files in the `styles` and `data` directory will have live sync enabled.
+To set up live refresh of the stylesheets, use [kosmtik][] to set up a testing server. In the following examples the CartoCSS project is named `styles/nedat.mml`; for a different stylesheet, pass in the path to it instead. For Docker users, only files in the `styles` and `data` directory will have live sync enabled.
 
 ```sh
 $ kosmtik serve styles/nedata.mml
@@ -105,7 +105,9 @@ Or for Docker:
 $ docker run -it --init --rm -v "$PWD/styles":/app/styles -v "$PWD/data":/app/data -p 6789:6789 geosensorweblab/d162-wms /app/node_modules/.bin/kosmtik serve --host 0.0.0.0 styles/nedata.mml
 ```
 
+Now editing the `nedata.mml` file or any stylesheet linked from that project file will automatically be updated by kosmtik in the browser. Adding files to the `data` directory *may* auto reload; I am not 100% sure about that and it may be necessary to refresh the browser page for kosmtik.
 
+[kosmtik]: https://github.com/kosmtik/kosmtik
 
 ## License
 
