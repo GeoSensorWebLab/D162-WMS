@@ -17,7 +17,7 @@ Please use the [official installation instructions for Docker on Windows][window
 
 ## Install Docker on MacOS
 
-Please use the [official installation instructions for Docker on MacOS][macos].
+Please use the [official installation instructions for Docker on MacOS][macos]. Note that you may have to set up the MacOS Docker application to enable File Sharing for the D162 WMS application directory (*or* for any directory containing the repository) in order for some Docker commands to work. This File Sharing only enables Docker containers to access the directories *if* you try to mount them with `docker run` — it does not enable File Sharing across a network.
 
 [macos]: https://docs.docker.com/docker-for-mac/install/
 
