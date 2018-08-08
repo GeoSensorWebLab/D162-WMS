@@ -31,21 +31,29 @@ Official Docker packages and [instructions are available for multiple Linux dist
 
 If you have not used Docker, I recommend reading the "[Getting Started with Docker][getting-started]" guide. This will give you a background in how Docker works, and introduce you to Docker-specific terms.
 
+**Recommendation**: If you can configure the amount of RAM available to Docker, increase it from the default 1.0 GB to a higher number based on your host computer. More RAM will speed up Docker when building images.
+
 [getting-started]: https://docs.docker.com/get-started/
 
 ## Developing D162 WMS Implementation using Docker
-
-TODO: Write instructions for setting up a container that runs kosmtik
-
-## Deploying D162 WMS Implementation using Docker
-
-TODO: Write instructions for setting up a container that runs the WMS implementation (no local code sync needed)
 
 The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
 
 ```sh
 $ docker build . -t geosensorweblab/d162-wms
-$ docker run -p 3000:3000 -it --rm geosensorweblab/d162-wms node index.js
+$ docker run -it --init --rm -v "$PWD/styles":/app/styles -v "$PWD/data":/app/data -p 6789:6789 geosensorweblab/d162-wms /app/node_modules/.bin/kosmtik serve styles/nedata.mml
+```
+
+A server will be created in the container and is accessible on localhost port 6789: http://localhost:6789.
+
+
+## Deploying D162 WMS Implementation using Docker
+
+The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
+
+```sh
+$ docker build . -t geosensorweblab/d162-wms
+$ docker run -p 3000:3000 -it --init --rm geosensorweblab/d162-wms node index.js
 ```
 
 This will create an image template from the current code, and then launch a container based on that image. The service will be linked to run on the host OS on port 3000. You can use `control-C` to quit the running Docker container.
