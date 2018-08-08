@@ -41,3 +41,13 @@ TODO: Write instructions for setting up a container that runs kosmtik
 
 TODO: Write instructions for setting up a container that runs the WMS implementation (no local code sync needed)
 
+The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
+
+```sh
+$ docker build . -t geosensorweblab/d162-wms
+$ docker run -p 3000:3000 -it --rm geosensorweblab/d162-wms node index.js
+```
+
+This will create an image template from the current code, and then launch a container based on that image. The service will be linked to run on the host OS on port 3000. You can use `control-C` to quit the running Docker container.
+
+Note that `node index.js` in the above command is optional; if it is not included, then Docker will run `node index.js` as the default command.
