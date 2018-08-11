@@ -28,17 +28,19 @@ function download(uri, filepath) {
     if (fs.existsSync(filepath)) {
       console.log("File already exists, checking modification time");
       let stats = fs.statSync(filepath);
+      console.log("Local file has modification date " + stats.mtime.toString());
       options.headers = options.headers || {};
       options.headers['if-modified-since'] = moment(stats.mtime).utc().format("ddd, DD MMM YYYY HH:mm:ss") + " GMT";
+      console.log("Using If-Modified-Since: " + options.headers['if-modified-since']);
     }
 
     let request = scheme.request(options, (response) => {
       // Handle redirects
       if (response.statusCode >= 301 && response.statusCode < 304 && response.headers['location'] !== undefined) {
-        console.log("Following redirect");
+        console.log("Following redirect: " + response.headers['location']);
         resolve(download(response.headers['location'], filepath));
       } else if (response.statusCode == 304) {
-        console.log("No update required.");
+        console.log("304 - No update required.");
         resolve();
       } else {
         console.log(`Downloading to "${filepath}"`);
@@ -60,8 +62,14 @@ function download(uri, filepath) {
           file.end();
           console.log("\nDownload Complete.");
           let moddate = new Date(response.headers['last-modified']);
-          fs.utimesSync(filepath, moddate, moddate);
-          resolve();
+          console.log("Setting modification time to " + moddate.toString());
+          fs.utimes(filepath, moddate, moddate, (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
         });
 
         response.pipe(file);
@@ -145,7 +153,11 @@ data.forEach((datum) => {
   let filename = path.basename(datum.src);
   let filepath = "data/" + filename;
 
-  download(datum.src, filepath).then(function() {
+  download(datum.src, filepath)
+  .then(() => {
     extract(filepath);
+  })
+  .catch((err) => {
+    console.error(err);
   });
 });
