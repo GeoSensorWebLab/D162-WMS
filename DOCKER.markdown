@@ -35,6 +35,24 @@ If you have not used Docker, I recommend reading the "[Getting Started with Dock
 
 [getting-started]: https://docs.docker.com/get-started/
 
+## Loading Natural Earth Data using Docker
+
+For the Natural Earth Data stylesheet, you will need a shapefile. There is a script in this repository to automatically download it.
+
+**For MacOS/Linux Hosts:**
+
+```sh
+$ docker build . -t geosensorweblab/d162-wms
+$ docker run -it --init --rm -v "$PWD/data":/app/data geosensorweblab/d162-wms node get-data.js
+```
+
+**For Windows Hosts:**
+
+```sh
+$ docker build . -t geosensorweblab/d162-wms
+$ docker run -it --init --rm -v "%CD%/data":/app/data geosensorweblab/d162-wms node get-data.js
+```
+
 ## Developing D162 WMS Implementation using Docker
 
 The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
