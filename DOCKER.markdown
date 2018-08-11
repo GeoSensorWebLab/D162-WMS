@@ -57,7 +57,7 @@ $ docker run -it --init --rm -v "%CD%/data":/app/data geosensorweblab/d162-wms n
 
 The base image created for this D162 application can be used for both developing the stylesheets as well as running the WMS implementation, depending on the arguments passed into the `docker run` command.
 
-An application for previewing CartoCSS, [kosmtik][], can be ran in Docker to edit the stylesheets on your host machine and see the changes update automatically.
+An application for previewing CartoCSS, [kosmtik][], can be ran in Docker to edit the stylesheets on your host machine and see the changes update automatically. (Although Docker for Windows does not support automatic update of the stylesheet; you will have to reload kosmtik in the browser to see changes.)
 
 **For MacOS/Linux Hosts:**
 
