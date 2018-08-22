@@ -12,6 +12,13 @@
     <Parameter name="minzoom">0</Parameter>
     <Parameter name="maxzoom">20</Parameter>
   </Parameters>
+  <FontSet name="fontset-0">
+    <Font face-name="Open Sans Regular" />
+    <Font face-name="Noto" />
+    <Font face-name="Hanazono" />
+    <Font face-name="Unifont" />
+    <Font face-name="DejaVu" />
+  </FontSet>
   <Style filter-mode="first" name="world">
     <Rule>
       <PolygonSymbolizer fill="#f2efe9" />
@@ -21,6 +28,190 @@
     <StyleName><![CDATA[world]]></StyleName>
     <Datasource>
       <Parameter name="file"><![CDATA[../data/10m_physical/ne_10m_land.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="settlementsrf">
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AL020')]]></Filter>
+      <LineSymbolizer stroke="#000000" stroke-width="2" />
+      <PolygonSymbolizer fill="#e8c3b2" fill-opacity="1" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="settlementsrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[settlementsrf]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/settlementsrf.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="agriculturesrf">
+    <Rule>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'EA010') and ([OSM_T_LAN] = 'farmland')]]></Filter>
+      <LineSymbolizer stroke="#559944" stroke-width="1" />
+      <PolygonSymbolizer fill="#f7eded" fill-opacity="1" />
+      <PolygonPatternSymbolizer file="Green_Pattern.svg" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="agriculturesrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[agriculturesrf]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/agriculturesrf.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="culturesrf">
+    <Rule>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL030') and ([OSM_T_LAN] = 'cemetery')]]></Filter>
+      <LineSymbolizer stroke="#000000" stroke-dasharray="5, 2.5" stroke-width="1" />
+      <PolygonSymbolizer fill="#faf5f5" fill-opacity="1" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="culturesrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[culturesrf]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/culturesrf.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="hydrographysrf-z2">
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'BI020')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-width="2" />
+      <PolygonSymbolizer fill="#555555" />
+    </Rule>
+  </Style>
+  <Style filter-mode="first" name="hydrographysrf-z1">
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'BH082')]]></Filter>
+      <LineSymbolizer stroke="#00a0c6" stroke-width="1" />
+      <PolygonSymbolizer fill="#b0e1ed" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="hydrographysrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[hydrographysrf-z1]]></StyleName>
+    <StyleName><![CDATA[hydrographysrf-z2]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/hydrographysrf.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="hydrographycrv">
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'BH140') and ([OSM_T_WAT] = 'drain')]]></Filter>
+      <LineSymbolizer stroke="#00a0c6" stroke-dasharray="10, 2.5" stroke-width="1" />
+    </Rule>
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'BH140') and ([OSM_T_WAT] != 'drain')]]></Filter>
+      <LineSymbolizer stroke="#00a0c6" stroke-width="1" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="hydrographycrv" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[hydrographycrv]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/hydrographycrv.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="recreationsrf">
+    <Rule>
+      <MaxScaleDenominator>1500000</MaxScaleDenominator>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AK040')]]></Filter>
+      <LineSymbolizer stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-width="1" />
+      <PolygonPatternSymbolizer file="sport_ground_wilson.svg" />
+    </Rule>
+    <Rule>
+      <MinScaleDenominator>3000000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AK040')]]></Filter>
+      <LineSymbolizer stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-width="1" />
+      <PolygonSymbolizer fill="#e8f3e2" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="recreationsrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[recreationsrf]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/recreationsrf.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="informationpnt">
+    <Rule>
+      <Filter><![CDATA[([OSM_T_IIN].match('Syria.*')) and ([OSM_T_PLA] = 'locality')]]></Filter>
+      <TextSymbolizer dx="0" dy="-6" fill="#000000" fontset-name="fontset-0" halo-fill="#ffffff" halo-radius="1" size="10"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+      <MarkersSymbolizer allow-overlap="true" fill="#ff4455" stroke="#881133" width="6" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="informationpnt" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[informationpnt]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/informationpnt.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="structurepnt">
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_REL] = 'muslim') and ([OSM_T_AME] = 'place_of_worship')]]></Filter>
+      <MarkersSymbolizer file="PT_Black_Mosque.svg" height="15" width="15" />
+    </Rule>
+    <Rule>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_REL] = 'muslim') and ([OSM_T_AME] = 'place_of_worship')]]></Filter>
+      <MarkersSymbolizer file="AR-Black_Mosque.svg" height="13" width="13" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'college')]]></Filter>
+      <MarkersSymbolizer file="PT_Black_School.svg" height="15" width="15" />
+    </Rule>
+    <Rule>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'college')]]></Filter>
+      <MarkersSymbolizer file="PT_Black_School.svg" height="13" width="13" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
+      <MarkersSymbolizer file="building.svg" height="3" width="3" />
+    </Rule>
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
+      <MarkersSymbolizer file="building.svg" height="7" width="7" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>750</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013')]]></Filter>
+      <MarkersSymbolizer file="building.svg" height="3" width="3" />
+    </Rule>
+    <Rule>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013')]]></Filter>
+      <MarkersSymbolizer file="building.svg" height="4" width="4" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="structurepnt" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[structurepnt]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/structurepnt.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
+  <Style filter-mode="first" name="transportationgroundcrv">
+    <Rule>
+      <LineSymbolizer stroke="#116688" stroke-width="1" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="transportationgroundcrv" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[transportationgroundcrv]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/transportationgroundcrv.shp]]></Parameter>
       <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>

@@ -31,7 +31,7 @@ _parts:
 
 Stylesheet:
   - testbed.mss
-
+   
 Layer:
   - id: world
     geometry: polygon
@@ -41,3 +41,68 @@ Layer:
       type: shape
     properties:
       maxzoom: 20
+  - id: settlementsrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/settlementsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20	  
+  - id: agriculturesrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/agriculturesrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: hydrographysrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/hydrographysrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: hydrographycrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/hydrographycrv.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: recreationsrf
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/recreationsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: informationpnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/informationpnt.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: transportationgroundcrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/transportationgroundcrv.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: structurepnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/structurepnt.shp
+      type: shape
+    properties:
+      maxzoom: 20
+
