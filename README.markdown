@@ -103,10 +103,12 @@ Now editing the `nedata.mml` file or any stylesheet linked from that project fil
 
 ## License
 
-Copyright University of Calgary, James Badger, 2018. All rights reserved.
+Copyright University of Calgary, GeoSensorWeb Lab, 2018. All rights reserved.
 
 (To be re-licensed for OGC Testbed in the future.)
 
 ## Authors
 
-James Badger, University of Calgary (<jpbadger@ucalgary.ca>)
+James Badger, University of Calgary (<jpbadger@ucalgary.ca>)  
+Soroush Ojagh, University of Calgary
+
