@@ -21,6 +21,6 @@
     "xmlbuilder": "^10.0.0"
   },
   "devDependencies": {
-    "kosmtik": "git+https://github.com/kosmtik/kosmtik.git#f4626769d8eba9baf6372abf75ed3a1bb92b1ad2"
+    "kosmtik": "git+https://github.com/kosmtik/kosmtik.git#5fbed1dd00435686937053225ee10fc024f0863d"
   }
 }
