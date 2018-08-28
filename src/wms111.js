@@ -6,55 +6,78 @@ const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
 // Generate a GetCapabilities document based on the given configuration
 function GetCapabilities(config) {
-  let xml = builder.create('WMT_MS_Capabilities', {
+  let xml = builder.create({
+    WMT_MS_Capabilities: {
+      "@version": "1.1.1",
+      Service: {
+        Name: {
+          "#text": "OGC:WMS"
+        },
+        Title: {
+          "#text": config.title
+        },
+        Abstract: {
+          "#text": config.abstract
+        },
+        OnlineResource: {
+          "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+          "@xlink:type": "simple",
+          "@xlink:href": config.host
+        }
+      },
+
+      Capability: {
+        Request: {
+          GetCapabilities: {
+            Format: {
+              "#text": "application/vnd.ogc.wms_xml"
+            },
+            DCPType: {
+              HTTP: {
+                Get: {
+                  OnlineResource: {
+                    "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+                    "@xlink:type": "simple",
+                    "@xlink:href": config.host + '/service?'
+                  }
+                }
+              }
+            }
+          },
+
+          GetMap: GetCapabilitiesGetMapObject(config)
+        },
+
+        Exception: {
+          // To create multiple elements of the same name, use an array
+          // and xmlbuilder will handle it.
+          Format: [
+            { "#text": "application/vnd.ogc.se_xml" },
+            { "#text": "application/vnd.ogc.se_inimage" },
+            { "#text": "application/vnd.ogc.se_blank" }
+          ]
+        },
+
+        // Layers
+        Layer: GetCapabilitiesLayersObject(config)
+      }
+    }
+  }, {
     version: '1.0',
     encoding: 'UTF-8',
     standalone: false
   }, {
     sysID: 'http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.dtd'
-  })
-  .att({ version: '1.1.1' })
-  .ele('Service')
-    .ele('Name', 'OGC:WMS').up()
-    .ele('Title', config.title).up()
-    .ele('Abstract', config.abstract).up()
-    .ele('OnlineResource', {
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "xlink:type": "simple",
-      "xlink:href": config.host
-    }).up()
-    .up()
-  .ele('Capability')
-    .ele('Request')
-      .ele('GetCapabilities')
-        .ele('Format', 'application/vnd.ogc.wms_xml').up()
-        .ele('DCPType')
-          .ele('HTTP')
-            .ele('Get')
-              .ele('OnlineResource', {
-                "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                "xlink:type": "simple",
-                "xlink:href": config.host + '/service?'
-              }).up()
-              .up()
-            .up()
-          .up()
-        .up()
-      .importDocument(GetCapabilitiesGetMap(config)).up()
-    .ele('Exception')
-      .ele('Format', 'application/vnd.ogc.se_xml').up()
-      .ele('Format', 'application/vnd.ogc.se_inimage').up()
-      .ele('Format', 'application/vnd.ogc.se_blank').up()
-      .up()
-    .importDocument(GetCapabilitiesLayers(config))
-  .end({ pretty: true });
+  });
 
-  return xml;
+  return xml.end({ pretty: true });
 }
 
 // Generate a subsection for the GetMap requests
-function GetCapabilitiesGetMap(config) {
-  let xml = builder.begin().ele('GetMap');
+function GetCapabilitiesGetMapObject(config) {
+  let node = {
+    Format: []
+  };
 
   // Add supported formats
   let formats = [];
@@ -66,55 +89,57 @@ function GetCapabilitiesGetMap(config) {
     });
   });
 
-  formats.forEach((format) => {
-    xml.ele('Format', format);
-  });
+  node.Format = formats;
 
-  xml.ele('DCPType')
-    .ele('HTTP')
-      .ele('Get')
-        .ele('OnlineResource', {
-          "xmlns:xlink": "http://www.w3.org/1999/xlink",
-          "xlink:type": "simple",
-          "xlink:href": config.host + '/service?'
-        });
+  node.DCPType = {
+    HTTP: {
+      Get: {
+        OnlineResource: {
+          "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+          "@xlink:type": "simple",
+          "@xlink:href": config.host + '/service?'
+        }
+      }
+    }
+  };
 
-  return xml.root();
+  return node;
 }
 
 // Generate the Layer(s) subsection for all layers defined in `config`
-function GetCapabilitiesLayers(config) {
-  let xml = builder.begin();
+function GetCapabilitiesLayersObject(config) {
+  let node = config.layers.map((layer) => {
+    let layerElement = {
+      Name: { "#text": layer.name },
+      Title: { "#text": layer.title },
+      SRS: { "#text": "EPSG:3857" },
+      LatLonBoundingBox: {
+        "@minx": layer.bbox[0],
+        "@miny": layer.bbox[1],
+        "@maxx": layer.bbox[2],
+        "@maxy": layer.bbox[3]
+      },
 
-  config.layers.forEach((layer) => {
-    let baseLayer = xml.ele('Layer')
-      .ele('Name', layer.name).up()
-      .ele('Title', layer.title).up()
-      .ele('SRS', 'EPSG:3857').up()
-      .ele('LatLonBoundingBox', {
-        "minx": layer.bbox[0],
-        "miny": layer.bbox[1],
-        "maxx": layer.bbox[2],
-        "maxy": layer.bbox[3]
-      }).up();
+      BoundingBox: layer.bounds.map((extent) => {
+        return {
+          "@SRS": extent.srs,
+          "@minx": extent.bbox[0],
+          "@miny": extent.bbox[1],
+          "@maxx": extent.bbox[2],
+          "@maxy": extent.bbox[3]
+        };
+      }),
 
-    layer.bounds.forEach((extent) => {
-      baseLayer.ele('BoundingBox', {
-        "SRS": extent.srs,
-        "minx": extent.bbox[0],
-        "miny": extent.bbox[1],
-        "maxx": extent.bbox[2],
-        "maxy": extent.bbox[3]
-      });
-    });
+      Layer: {
+        Name: { "#text": layer.name },
+        Title: { "#text": layer.title }
+      }
+    };
 
-      // Sub-layers
-      baseLayer.ele('Layer')
-        .ele('Name', layer.name).up()
-        .ele('Title', layer.title).up();
+    return layerElement;
   });
 
-  return xml.root();
+  return node;
 }
 
 function validateGetMap(config, query) {
