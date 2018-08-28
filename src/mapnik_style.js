@@ -39,25 +39,31 @@ class MapnikStyle {
       }
 
       this.map.load(this.stylesheetPath, (err, map) => {
-        if (err) reject(err);
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else if (map === undefined) {
+          console.error("No Map");
+          reject("No map");
+        } else {
+          map.zoomToBox(options.bbox);
+          let image;
+          try {
+            image = new mapnik.Image(options.width, options.height);
+          }
+          catch (e) {
+            reject(e);
+          }
 
-        map.zoomToBox(options.bbox);
-        let image;
-        try {
-          image = new mapnik.Image(options.width, options.height);
-        }
-        catch (e) {
-          reject(e);
-        }
-
-        if (image !== undefined) {
-          map.render(image, (err, image) => {
-            if (err) reject(err);
-            image.encode(this.formatForMIME(options.format), (err, buffer) => {
-                if (err) reject(err);
-                resolve(buffer);
+          if (image !== undefined) {
+            map.render(image, (err, image) => {
+              if (err) reject(err);
+              image.encode(this.formatForMIME(options.format), (err, buffer) => {
+                  if (err) reject(err);
+                  resolve(buffer);
+              });
             });
-          });
+          }
         }
       });
     });
