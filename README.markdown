@@ -22,6 +22,13 @@ $ sudo apt install fontconfig fonts-dejavu-core fonts-noto-cjk fonts-noto-hinted
 $ sudo fc-cache -f -v
 ```
 
+Instructions for MacOS using homebrew:
+
+```sh
+$ brew update
+$ brew cask install font-dejavu-sans font-noto-sans-cjk font-noto-sans font-hanamina font-gnu-unifont font-open-sans
+```
+
 [NVM]: https://github.com/creationix/nvm
 
 ## Development Setup with Docker
