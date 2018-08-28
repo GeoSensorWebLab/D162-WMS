@@ -51,7 +51,7 @@
       <Filter><![CDATA[([F_CODE] = 'EA010') and ([OSM_T_LAN] = 'farmland')]]></Filter>
       <LineSymbolizer stroke="#559944" stroke-width="1" />
       <PolygonSymbolizer fill="#f7eded" fill-opacity="1" />
-      <PolygonPatternSymbolizer file="Green_Pattern.svg" />
+      <PolygonPatternSymbolizer file="Green_AP77_Fill.svg" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="agriculturesrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -121,7 +121,7 @@
       <MinScaleDenominator>750</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AK040')]]></Filter>
       <LineSymbolizer stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-width="1" />
-      <PolygonPatternSymbolizer file="sport_ground_wilson.svg" />
+      <PolygonPatternSymbolizer file="sports_ground_wilson.svg" />
     </Rule>
     <Rule>
       <MinScaleDenominator>3000000</MinScaleDenominator>
@@ -151,6 +151,336 @@
       <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>
+  <Style filter-mode="first" name="transportationgroundcrv">
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000000</MaxScaleDenominator>
+      <MinScaleDenominator>400000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="0.8" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000000</MaxScaleDenominator>
+      <MinScaleDenominator>6500000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="0.8" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>6500000</MaxScaleDenominator>
+      <MinScaleDenominator>3000000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="1" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>3000000</MaxScaleDenominator>
+      <MinScaleDenominator>1500000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="1.4" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500000</MaxScaleDenominator>
+      <MinScaleDenominator>750000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="1.9" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>750000</MaxScaleDenominator>
+      <MinScaleDenominator>400000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="2" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MinScaleDenominator>25000000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="0.5" />
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AP030')]]></Filter>
+      <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
+    </Rule>
+  </Style>
+  <Style filter-mode="first" name="transportationgroundcrv-fill">
+    <Rule>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="0.8" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="1.2" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="3" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>12500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="7.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>12500</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="8.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="16" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="19" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#edddd6" stroke-linecap="round" stroke-width="25" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="0.8" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="4" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>12500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="7.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>12500</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="8.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="16" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="19" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-opacity="1" stroke-width="25" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="4.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="6.12" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="7.74" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="14.4" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="17.1" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#e892a2" stroke-linecap="round" stroke-width="22.5" />
+    </Rule>
+  </Style>
+  <Style filter-mode="first" name="transportationgroundcrv-case">
+    <Rule>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="1" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="2" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="4" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>12500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="9" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>12500</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="10" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="18" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="21" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer stroke="#633f2f" stroke-linecap="butt" stroke-width="27" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#9eae23" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="0.8" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>12500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="9" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>12500</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="10" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="18" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="21" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer stroke="#707d05" stroke-linecap="butt" stroke-opacity="0.4" stroke-width="27" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="6" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>25000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="8" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>25000</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="10" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>2500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="18" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>2500</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="21" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
+      <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="27" />
+    </Rule>
+  </Style>
+  <Layer minimum-scale-denominator="500" name="transportationgroundcrv" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[transportationgroundcrv-case]]></StyleName>
+    <StyleName><![CDATA[transportationgroundcrv-fill]]></StyleName>
+    <StyleName><![CDATA[transportationgroundcrv]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[../data/10m_physical/transportationgroundcrv.shp]]></Parameter>
+      <Parameter name="type"><![CDATA[shape]]></Parameter>
+    </Datasource>
+  </Layer>
   <Style filter-mode="first" name="structurepnt">
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
@@ -161,7 +491,7 @@
     <Rule>
       <MinScaleDenominator>200000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_REL] = 'muslim') and ([OSM_T_AME] = 'place_of_worship')]]></Filter>
-      <MarkersSymbolizer file="AR-Black_Mosque.svg" height="13" width="13" />
+      <MarkersSymbolizer file="AR_Black_Mosque.svg" height="13" width="13" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
@@ -200,18 +530,6 @@
     <StyleName><![CDATA[structurepnt]]></StyleName>
     <Datasource>
       <Parameter name="file"><![CDATA[../data/10m_physical/structurepnt.shp]]></Parameter>
-      <Parameter name="type"><![CDATA[shape]]></Parameter>
-    </Datasource>
-  </Layer>
-  <Style filter-mode="first" name="transportationgroundcrv">
-    <Rule>
-      <LineSymbolizer stroke="#116688" stroke-width="1" />
-    </Rule>
-  </Style>
-  <Layer minimum-scale-denominator="500" name="transportationgroundcrv" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
-    <StyleName><![CDATA[transportationgroundcrv]]></StyleName>
-    <Datasource>
-      <Parameter name="file"><![CDATA[../data/10m_physical/transportationgroundcrv.shp]]></Parameter>
       <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>
