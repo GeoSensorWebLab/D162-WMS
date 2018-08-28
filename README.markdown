@@ -12,6 +12,8 @@ Note: When adding the server to QGIS, make sure "Ignore GetMap/GetTile URI repor
 
 TODO: Explain how to deploy this service to an internet-facing server
 
+There are systemd unit scripts in the `init` directory that are useful for managing the WMS and kosmtik instances.
+
 ## Development Setup with Docker
 
 Instructions for developing the CartoCSS stylesheets using Docker are detailed in the `DOCKER.markdown` document. This is probably the easiest way to get started on Windows, where setting up dependencies can be difficult.

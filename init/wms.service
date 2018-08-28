@@ -1,0 +1,14 @@
+[Unit]
+Description=Small WMS implementation for OGC Testbed 14
+AssertPathExists=/home/ubuntu/D162-WMS
+
+[Service]
+WorkingDirectory=/home/ubuntu/D162-WMS
+Environment=NODE_VERSION=8
+ExecStart=/home/ubuntu/.nvm/nvm-exec node index.js
+Restart=always
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=kosmtik web server for cartocss preview
+AssertPathExists=/home/ubuntu/D162-WMS
+
+[Service]
+WorkingDirectory=/home/ubuntu/D162-WMS
+Environment=NODE_VERSION=8
+ExecStart=/home/ubuntu/.nvm/nvm-exec node_modules/.bin/kosmtik serve styles/testbed.mml --host 0.0.0.0 --port 7000
+Restart=always
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
