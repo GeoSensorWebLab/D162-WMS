@@ -4,15 +4,25 @@ A WMS that implements the conceptual model from D160. This demonstrates that the
 
 ## Usage
 
-TODO: How to use this server, and a link to a production server
+A production WMS is online at http://testbed.gswlab.ca:3000/service. Kosmtik can be viewed at http://testbed.gswlab.ca:7000.
 
 Note: When adding the server to QGIS, make sure "Ignore GetMap/GetTile URI reported in capabilities" is checked.
 
 ## Deployment to Production Server
 
-TODO: Explain how to deploy this service to an internet-facing server
+Our production deployment is a cloud server running Ubuntu Server 18.04 LTS. It has a default `ubuntu` user, which has this repository cloned in its home directory (`/home/ubuntu/d162-wms`). [NVM][] is installed to set up Node v8. SSH is used to set up NVM, Node, and then install the node modules.
 
 There are systemd unit scripts in the `init` directory that are useful for managing the WMS and kosmtik instances.
+
+Certain fonts are neede for the renderer, and can be installed using apt:
+
+```sh
+$ sudo apt update
+$ sudo apt install fontconfig fonts-dejavu-core fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-open-sans
+$ sudo fc-cache -f -v
+```
+
+[NVM]: https://github.com/creationix/nvm
 
 ## Development Setup with Docker
 
