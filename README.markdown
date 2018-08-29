@@ -6,6 +6,8 @@ A WMS that implements the conceptual model from D160. This demonstrates that the
 
 A production WMS is online at http://testbed.gswlab.ca:3000/service. Kosmtik can be viewed at http://testbed.gswlab.ca:7000.
 
+The WMS will automatically update the displayed map when any data in the `styles` directory is modified, excluding the Mapnik XML files. To disabled this behaviour, add `WATCH=false` as an environment variable when starting the server.
+
 Note: When adding the server to QGIS, make sure "Ignore GetMap/GetTile URI reported in capabilities" is checked.
 
 ## Deployment to Production Server

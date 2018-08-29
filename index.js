@@ -1,5 +1,8 @@
+const Compiler    = require('./src/carto_compiler');
 const express     = require('express');
+const fs          = require('fs');
 const MapnikStyle = require('./src/mapnik_style');
+const path        = require('path');
 const wms         = require('./src/wms111');
 
 let app = express();
@@ -7,6 +10,13 @@ let app = express();
 // Use Environment Variables to modify these for production use
 let host = process.env.HOST || "localhost";
 let port = process.env.PORT || 3000;
+let autoUpdate;
+
+if (process.env.WATCH === undefined) {
+  autoUpdate = true;
+} else {
+  autoUpdate = process.env.WATCH === "TRUE";
+}
 
 let service = {
   title:    'D162 WMS',
@@ -70,6 +80,7 @@ let service = {
   ]
 };
 
+// Start HTTP Server
 app.get(/\/service\??/, (req, res) => {
   wms(service, req.query).then((wmsResponse) => {
     res.set(wmsResponse.headers);
@@ -81,3 +92,36 @@ app.get(/\/service\??/, (req, res) => {
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
+
+// Start FS watcher for stylesheet changes
+if (autoUpdate) {
+  let stylesDir = path.join(__dirname, 'styles');
+  fs.watch(stylesDir, (eventType, filename) => {
+
+    if (path.extname(filename) !== ".xml") {
+      console.log("Stylesheet directory changed, updating stylesheets for Mapnik");
+
+      // On any change, re-compile all stylesheets
+      fs.readdir(stylesDir, (err, files) => {
+        if (err) {
+          throw err;
+        }
+
+        let mmlFiles = files.filter((file) => {
+          return path.extname(file) === ".mml";
+        });
+
+        let compiler = new Compiler();
+
+        mmlFiles.forEach((mmlFile) => {
+          let mmlPath = path.join(stylesDir, mmlFile);
+          let basename = path.basename(mmlPath, ".mml");
+          let outputPath = path.join(stylesDir, `${basename}.xml`);
+
+
+          compiler.compile(mmlPath, outputPath);
+        });
+      });
+    }
+  });
+}
