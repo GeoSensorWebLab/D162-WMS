@@ -444,4 +444,20 @@ Map {
   text-placement: line;  
 }
 
+#transportationgroundcrv [F_CODE = 'AQ040'] [TRS = 13]   { 
+  line-color:#168;
+  //or vertext-first
+  marker-transform: rotate(90,0,0);
+  [F_CODE = 'AQ040']{
+  marker-file: url(horline.svg);
+  marker-placement: vertex-last;
+  }
+  [F_CODE = 'AQ040']{
+  marker-multi-policy:each;
+  marker-file: url(horlinelast.svg);
+  marker-placement: vertex-first;
+  }
+  }
+
+
 
