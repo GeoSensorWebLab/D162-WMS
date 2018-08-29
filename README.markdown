@@ -14,6 +14,14 @@ Our production deployment is a cloud server running Ubuntu Server 18.04 LTS. It 
 
 There are systemd unit scripts in the `init` directory that are useful for managing the WMS and kosmtik instances.
 
+When running under production, it may be necessary to modify the default HTTP host that is reported to clients in the Capabilities document. This can be done when starting the server:
+
+```sh
+$ HOST="testbed.gswlab.ca" node index.js
+```
+
+This can also be modified in the `init/wms.service` script for systemd.
+
 Certain fonts are neede for the renderer, and can be installed using apt:
 
 ```sh

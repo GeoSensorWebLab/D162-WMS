@@ -4,10 +4,14 @@ const wms         = require('./src/wms111');
 
 let app = express();
 
+// Use Environment Variables to modify these for production use
+let host = process.env.HOST || "localhost";
+let port = process.env.PORT || 3000;
+
 let service = {
   title:    'D162 WMS',
   abstract: 'WMS implementation for D162',
-  host:     'http://localhost:3000',
+  host:     `http://${host}:${port}`,
   layers: [
     {
       // human-readable title
@@ -46,8 +50,6 @@ app.get(/\/service\??/, (req, res) => {
     res.send(wmsResponse.data);
   });
 });
-
-let port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
