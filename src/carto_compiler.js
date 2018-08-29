@@ -2,6 +2,8 @@ const carto = require('carto');
 const fs    = require('fs');
 const path  = require('path');
 
+// Small class to compile a Carto project file (MML) to Mapnik 
+// stylesheet (XML)
 class CartoCompiler {
   constructor() {}
 
