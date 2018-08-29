@@ -87,6 +87,7 @@ $ node compile.js
 To test that Mapnik will render a map to an image:
 
 ```sh
+$ cd scripts
 $ node test-mapnik.js
 ```
 
