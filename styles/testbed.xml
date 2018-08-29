@@ -199,6 +199,11 @@
       <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
     </Rule>
     <Rule>
+      <Filter><![CDATA[([F_CODE] = 'AQ040') and ([TRS] = 13)]]></Filter>
+      <LineSymbolizer stroke="#116688" />
+      <MarkersSymbolizer file="horlinelast.svg" multi-policy="each" placement="vertex-first" transform="rotate(90,0,0)" />
+    </Rule>
+    <Rule>
       <Filter><![CDATA[([F_CODE] = 'AP030')]]></Filter>
       <TextSymbolizer allow-overlap="true" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="2" opacity="1" placement="line" size="9"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
     </Rule>
