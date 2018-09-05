@@ -48,7 +48,15 @@ Layer:
       file: ../data/10m_physical/settlementsrf.shp
       type: shape
     properties:
-      maxzoom: 20	  
+      maxzoom: 20
+  - id: vegetationsrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/vegetationsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20		  
   - id: agriculturesrf
     geometry: polygon
     <<: *extents
@@ -97,11 +105,51 @@ Layer:
       type: shape
     properties:
       maxzoom: 20
+  - id: bridges
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/bridges.shp
+      type: shape
+    properties:
+      maxzoom: 20 
+  - id: utilityinfrastructurecrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/utilityinfrastructurecrv.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: utilityinfrastructurepnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/utilityinfrastructurepnt.shp
+      type: shape
+    properties:
+      maxzoom: 20		  
   - id: structurepnt
     geometry: point
     <<: *extents
     Datasource:
       file: ../data/10m_physical/structurepnt.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: military 
+    geometry: point
+    <<: *extents84
+    Datasource:
+      file: ../data/10m_physical/military.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: emergency
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/emergency.shp
       type: shape
     properties:
       maxzoom: 20
