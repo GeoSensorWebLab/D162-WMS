@@ -21,7 +21,7 @@
   </FontSet>
   <Style filter-mode="first" name="world">
     <Rule>
-      <PolygonSymbolizer fill="#f2efe9" />
+      <PolygonSymbolizer fill="#ffffff" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="world" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
@@ -34,7 +34,6 @@
   <Style filter-mode="first" name="settlementsrf">
     <Rule>
       <Filter><![CDATA[([F_CODE] = 'AL020')]]></Filter>
-      <LineSymbolizer stroke="#000000" stroke-width="2" />
       <PolygonSymbolizer fill="#e8c3b2" fill-opacity="1" />
     </Rule>
   </Style>
@@ -60,11 +59,10 @@
   </Layer>
   <Style filter-mode="first" name="agriculturesrf">
     <Rule>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'EA010') and ([OSM_T_LAN] = 'farmland')]]></Filter>
-      <LineSymbolizer stroke="#559944" stroke-width="1" />
-      <PolygonSymbolizer fill="#f7eded" fill-opacity="1" />
-      <PolygonPatternSymbolizer file="Green_AP77_Fill.svg" />
+      <PolygonSymbolizer fill="#f7eded" />
+      <PolygonPatternSymbolizer clip="true" file="Green_AP77_Fill.svg" gamma="1" opacity="0.5" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="agriculturesrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -76,15 +74,17 @@
   </Layer>
   <Style filter-mode="first" name="hydrographysrf-z2">
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'BI020')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-width="2" />
-      <PolygonSymbolizer fill="#555555" />
+      <LineSymbolizer stroke="#000000" stroke-width="4" />
+      <MarkersSymbolizer file="PT_Black_Dam_2.svg" placement="interior" width="10" />
     </Rule>
   </Style>
   <Style filter-mode="first" name="hydrographysrf-z1">
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'BH082')]]></Filter>
-      <LineSymbolizer stroke="#00a0c6" stroke-width="0.5" />
+      <LineSymbolizer stroke="#00a0c6" stroke-width="4" />
       <PolygonSymbolizer fill="#b0e1ed" fill-opacity="1" />
     </Rule>
   </Style>
@@ -98,10 +98,12 @@
   </Layer>
   <Style filter-mode="first" name="hydrographycrv">
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'BH140') and ([OSM_T_WAT] = 'drain')]]></Filter>
       <LineSymbolizer stroke="#00a0c6" stroke-dasharray="10, 2.5" stroke-width="1" />
     </Rule>
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'BH140') and ([OSM_T_WAT] != 'drain')]]></Filter>
       <LineSymbolizer stroke="#00a0c6" stroke-width="1" />
     </Rule>
@@ -115,17 +117,16 @@
   </Layer>
   <Style filter-mode="first" name="recreationsrf">
     <Rule>
-      <MaxScaleDenominator>1500000</MaxScaleDenominator>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>50000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AK040')]]></Filter>
-      <LineSymbolizer stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-width="1" />
-      <PolygonPatternSymbolizer file="sports_ground_wilson.svg" />
+      <MarkersSymbolizer file="sports_ground_wilson.svg" />
     </Rule>
     <Rule>
-      <MinScaleDenominator>3000000</MinScaleDenominator>
+      <MaxScaleDenominator>50000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AK040')]]></Filter>
-      <LineSymbolizer stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-width="1" />
-      <PolygonSymbolizer fill="#e8f3e2" />
+      <LineSymbolizer offset="2" stroke="#3ea250" stroke-dasharray="5, 2.5" stroke-opacity="1" stroke-width="5" />
+      <PolygonSymbolizer fill="#e8f3e2" fill-opacity="1" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="recreationsrf" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -137,9 +138,9 @@
   </Layer>
   <Style filter-mode="first" name="informationpnt">
     <Rule>
+      <MaxScaleDenominator>750000</MaxScaleDenominator>
       <Filter><![CDATA[([OSM_T_IIN].match('Syria.*')) and ([OSM_T_PLA] = 'locality')]]></Filter>
-      <TextSymbolizer dx="0" dy="-6" fill="#000000" fontset-name="fontset-0" halo-fill="#ffffff" halo-radius="1" size="10"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
-      <MarkersSymbolizer allow-overlap="true" fill="#ff4455" stroke="#881133" width="6" />
+      <TextSymbolizer fill="#000000" fontset-name="fontset-0" halo-fill="#ffffff" halo-radius="1" size="10"><![CDATA[[OSM_T_ENG]]]></TextSymbolizer>
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="informationpnt" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -434,6 +435,36 @@
   </Style>
   <Style filter-mode="first" name="transportationgroundcrv-case">
     <Rule>
+      <MaxScaleDenominator>50000000</MaxScaleDenominator>
+      <MinScaleDenominator>6500000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="1.14" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>6500000</MaxScaleDenominator>
+      <MinScaleDenominator>750000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="1.5" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>750000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="3" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="6.3" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
+      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="12" />
+    </Rule>
+    <Rule>
       <MaxScaleDenominator>400000</MaxScaleDenominator>
       <MinScaleDenominator>200000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 5)]]></Filter>
@@ -559,36 +590,6 @@
       <Filter><![CDATA[([F_CODE] = 'AP030') and ([RIN_ROI] = 3)]]></Filter>
       <LineSymbolizer stroke="#dc2a67" stroke-linecap="butt" stroke-width="27" />
     </Rule>
-    <Rule>
-      <MaxScaleDenominator>50000000</MaxScaleDenominator>
-      <MinScaleDenominator>6500000</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="1.14" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>6500000</MaxScaleDenominator>
-      <MinScaleDenominator>750000</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="1.5" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>750000</MaxScaleDenominator>
-      <MinScaleDenominator>200000</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="3" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>200000</MaxScaleDenominator>
-      <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="6.3" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AP010')]]></Filter>
-      <LineSymbolizer stroke="#333333" stroke-dasharray="1, 0" stroke-width="12" />
-    </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="transportationgroundcrv" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
     <StyleName><![CDATA[transportationgroundcrv-case]]></StyleName>
@@ -609,34 +610,10 @@
       <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="-17" placement="vertex-first" transform="rotate(45,0,0)" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-first" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-first" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
       <MinScaleDenominator>500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="-17" placement="vertex-first" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-first" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-first" transform="rotate(45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
@@ -644,17 +621,25 @@
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
       <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="-17" placement="vertex-first" transform="rotate(45,0,0)" />
     </Rule>
+  </Style>
+  <Style filter-mode="first" name="bridges-background/foreground">
     <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-first" transform="rotate(45,0,0)" />
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <MinScaleDenominator>500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-first" transform="rotate(45,0,0)" />
+      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
     </Rule>
   </Style>
   <Style filter-mode="first" name="bridges-foreground">
@@ -670,14 +655,12 @@
       <MinScaleDenominator>1500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer offset="-10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-last" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-last" transform="rotate(-45,0,0)" />
+      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="2" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
@@ -691,14 +674,12 @@
       <MinScaleDenominator>1500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer offset="-10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-last" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-last" transform="rotate(-45,0,0)" />
+      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="2" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
@@ -712,114 +693,52 @@
       <MinScaleDenominator>1500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
       <LineSymbolizer offset="-10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="-12.5" placement="vertex-last" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="-10.5" placement="vertex-last" transform="rotate(-45,0,0)" />
-    </Rule>
-  </Style>
-  <Style filter-mode="first" name="bridges-background/foreground">
-    <Rule>
-      <MaxScaleDenominator>1500</MaxScaleDenominator>
-      <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>1500</MaxScaleDenominator>
-      <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>1500</MaxScaleDenominator>
-      <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>2500</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-last" transform="rotate(45,0,0)" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-last" transform="rotate(45,0,0)" />
+      <LineSymbolizer offset="-8" stroke="#000000" stroke-width="2" />
     </Rule>
   </Style>
   <Style filter-mode="first" name="bridges-background">
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
       <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer offset="13.5" stroke="#000000" stroke-width="3" />
       <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-first" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>2500</MaxScaleDenominator>
       <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer offset="10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-first" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
-      <LineSymbolizer offset="8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-first" transform="rotate(-45,0,0)" />
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <LineSymbolizer offset="8" stroke="#000000" stroke-width="2" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
       <MinScaleDenominator>500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer offset="13.5" stroke="#000000" stroke-width="3" />
       <MarkersSymbolizer allow-overlap="true" file="horline_width3.svg" offset="17" placement="vertex-first" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>2500</MaxScaleDenominator>
       <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer offset="10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-first" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
-      <LineSymbolizer offset="8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-first" transform="rotate(-45,0,0)" />
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <LineSymbolizer offset="8" stroke="#000000" stroke-width="2" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
@@ -833,49 +752,47 @@
       <MinScaleDenominator>1500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
       <LineSymbolizer offset="10" stroke="#000000" stroke-width="2" />
-      <MarkersSymbolizer allow-overlap="true" file="horline.svg" offset="12.5" placement="vertex-first" transform="rotate(-45,0,0)" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>5000</MaxScaleDenominator>
       <MinScaleDenominator>2500</MinScaleDenominator>
       <Filter><![CDATA[([RIN_ROI] = 3)]]></Filter>
-      <LineSymbolizer offset="8" stroke="#000000" stroke-width="1" />
-      <MarkersSymbolizer allow-overlap="true" file="horline_width1.svg" offset="10.5" placement="vertex-first" transform="rotate(-45,0,0)" />
+      <LineSymbolizer offset="8" stroke="#000000" stroke-width="2" />
     </Rule>
   </Style>
   <Style filter-mode="first" name="bridges-fill">
     <Rule>
       <MaxScaleDenominator>25000</MaxScaleDenominator>
       <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="8" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
       <MinScaleDenominator>25000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="3" />
     </Rule>
     <Rule>
       <MinScaleDenominator>200000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="0.8" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>25000</MaxScaleDenominator>
       <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="8" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
       <MinScaleDenominator>25000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="3" />
     </Rule>
     <Rule>
       <MinScaleDenominator>200000</MinScaleDenominator>
-      <Filter><![CDATA[([RIN_ROI] = 5)]]></Filter>
+      <Filter><![CDATA[([RIN_ROI] = 4)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-width="0.8" />
     </Rule>
     <Rule>
@@ -1025,8 +942,8 @@
     <StyleName><![CDATA[bridges-case]]></StyleName>
     <StyleName><![CDATA[bridges-fill]]></StyleName>
     <StyleName><![CDATA[bridges-background]]></StyleName>
-    <StyleName><![CDATA[bridges-background/foreground]]></StyleName>
     <StyleName><![CDATA[bridges-foreground]]></StyleName>
+    <StyleName><![CDATA[bridges-background/foreground]]></StyleName>
     <StyleName><![CDATA[bridges-foreground/background]]></StyleName>
     <Datasource>
       <Parameter name="file"><![CDATA[../data/10m_physical/bridges.shp]]></Parameter>
@@ -1052,14 +969,14 @@
       <MaxScaleDenominator>25000</MaxScaleDenominator>
       <MinScaleDenominator>750</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AT042') and ([OSM_T_POW] = 'tower')]]></Filter>
-      <MarkersSymbolizer file="pylon_wilson.svg" height="15" width="15" />
-      <TextSymbolizer allow-overlap="true" dx="0" dy="10" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="1" opacity="1" size="12"><![CDATA[Pylon]]></TextSymbolizer>
+      <MarkersSymbolizer file="pylon_wilson.svg" width="20" />
+      <TextSymbolizer allow-overlap="true" dx="0" dy="18" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="1" opacity="1" size="12"><![CDATA[Pylon]]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>400000</MaxScaleDenominator>
       <MinScaleDenominator>25000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AT042') and ([OSM_T_POW] = 'tower')]]></Filter>
-      <MarkersSymbolizer file="pylon_wilson.svg" height="13" width="13" />
+      <MarkersSymbolizer allow-overlap="true" file="pylon_wilson.svg" width="15" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="utilityinfrastructurepnt" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -1071,47 +988,47 @@
   </Layer>
   <Style filter-mode="first" name="structurepnt">
     <Rule>
-      <MaxScaleDenominator>200000</MaxScaleDenominator>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>750000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_REL] = 'muslim') and ([OSM_T_AME] = 'place_of_worship')]]></Filter>
-      <MarkersSymbolizer file="PT_Black_Mosque.svg" height="15" width="15" />
+      <MarkersSymbolizer file="PT_Black_Mosque.svg" height="5" width="5" />
     </Rule>
     <Rule>
-      <MinScaleDenominator>200000</MinScaleDenominator>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_REL] = 'muslim') and ([OSM_T_AME] = 'place_of_worship')]]></Filter>
-      <MarkersSymbolizer file="AR_Black_Mosque.svg" height="13" width="13" />
+      <MarkersSymbolizer file="AR_Black_Mosque.svg" height="20" width="20" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>200000</MaxScaleDenominator>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>750000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'college')]]></Filter>
-      <MarkersSymbolizer file="PT_Black_School.svg" height="15" width="15" />
+      <MarkersSymbolizer file="PT_Black_School.svg" height="5" width="5" />
     </Rule>
     <Rule>
-      <MinScaleDenominator>200000</MinScaleDenominator>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'college')]]></Filter>
-      <MarkersSymbolizer file="PT_Black_School.svg" height="13" width="13" />
+      <MarkersSymbolizer file="PT_Black_School.svg" height="20" width="20" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>200000</MaxScaleDenominator>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
-      <MarkersSymbolizer file="building.svg" height="3" width="3" />
+      <MarkersSymbolizer file="building1.svg" height="5" width="5" />
     </Rule>
     <Rule>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
-      <MarkersSymbolizer file="building.svg" height="7" width="7" />
+      <MarkersSymbolizer file="building1.svg" height="15" width="15" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>200000</MaxScaleDenominator>
-      <MinScaleDenominator>750</MinScaleDenominator>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>100000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013')]]></Filter>
-      <MarkersSymbolizer file="building.svg" height="3" width="3" />
+      <MarkersSymbolizer file="building1.svg" height="5" width="5" />
     </Rule>
     <Rule>
-      <MinScaleDenominator>200000</MinScaleDenominator>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013')]]></Filter>
-      <MarkersSymbolizer file="building.svg" height="4" width="4" />
+      <MarkersSymbolizer file="building1.svg" height="10" width="10" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="structurepnt" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
@@ -1121,60 +1038,53 @@
       <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>
-  <Style filter-mode="first" name="military">
+  <Style filter-mode="first" name="military-symbol">
     <Rule>
-      <Filter><![CDATA[([Id] = 4)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="25280201_Antipersonnel_Mine_with_Directional_Effects.svg" transform="rotate([Angle]-45,0,0)" width="20" />
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([Entity] = 11)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" file="11110400_Organization_or_Group.svg" width="20" />
     </Rule>
     <Rule>
-      <Filter><![CDATA[([Id] = 3)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="25280201_Antipersonnel_Mine_with_Directional_Effects.svg" transform="rotate([Angle]-45,0,0)" width="20" />
-    </Rule>
-    <Rule>
-      <Filter><![CDATA[([Id] = 2)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="25280201_Antipersonnel_Mine_with_Directional_Effects.svg" transform="rotate([Angle]-45,0,0)" width="20" />
-    </Rule>
-  </Style>
-  <Style filter-mode="first" name="military-foreground">
-    <Rule>
-      <Filter><![CDATA[([Id] = 8)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="11110400_Organization_or_Group.svg" width="15" />
-    </Rule>
-    <Rule>
-      <Filter><![CDATA[([Id] = 7)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="10190000_Emergency_Operation.svg" width="10" />
-    </Rule>
-    <Rule>
-      <Filter><![CDATA[([Id] = 6)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="11110400_Organization_or_Group.svg" width="15" />
-    </Rule>
-    <Rule>
-      <Filter><![CDATA[([Id] = 1)]]></Filter>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([Entity] = 19)]]></Filter>
       <MarkersSymbolizer allow-overlap="true" file="10190000_Emergency_Operation.svg" width="15" />
     </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([Entity] = 28)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" file="25280201_Antipersonnel_Mine_with_Directional_Effects.svg" transform="rotate([Angle]-90)" width="20" />
+    </Rule>
   </Style>
-  <Style filter-mode="first" name="military-background">
+  <Style filter-mode="first" name="military">
     <Rule>
-      <Filter><![CDATA[([Id] = 8)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="0600_Hostile_Faker.svg" width="30" />
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([StndID_1] = 0) and ([StndID_2] = 5)]]></Filter>
+      <MarkersSymbolizer file="0600_Hostile_Faker.svg" width="30" />
     </Rule>
     <Rule>
-      <Filter><![CDATA[([Id] = 7)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="0410_Neutral.svg" width="20" />
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([StndID_1] = 0) and ([StndID_2] = 4)]]></Filter>
+      <MarkersSymbolizer file="0510_Suspect_Joker.svg" width="30" />
     </Rule>
     <Rule>
-      <Filter><![CDATA[([Id] = 6)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="0510_Suspect_Joker.svg" width="30" />
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([StndID_1] = 0) and ([StndID_2] = 3)]]></Filter>
+      <MarkersSymbolizer file="0410_Neutral.svg" width="30" />
     </Rule>
     <Rule>
-      <Filter><![CDATA[([Id] = 1)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" file="0310_Friend.svg" width="30" />
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([StndID_1] = 0) and ([StndID_2] = 2)]]></Filter>
+      <MarkersSymbolizer file="0310_Friend.svg" width="30" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
+      <Filter><![CDATA[([StndID_1] = 0) and ([StndID_2] != 999)]]></Filter>
+      <MarkersSymbolizer width="30" />
     </Rule>
   </Style>
   <Layer minimum-scale-denominator="500" name="military" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-    <StyleName><![CDATA[military-background]]></StyleName>
-    <StyleName><![CDATA[military-foreground]]></StyleName>
     <StyleName><![CDATA[military]]></StyleName>
+    <StyleName><![CDATA[military-symbol]]></StyleName>
     <Datasource>
       <Parameter name="file"><![CDATA[../data/10m_physical/military.shp]]></Parameter>
       <Parameter name="type"><![CDATA[shape]]></Parameter>

@@ -31,6 +31,21 @@ _parts:
 
 Stylesheet:
   - testbed.mss
+  - separated_styles/AgricultureSrf.mss
+  - separated_styles/Bridges.mss
+  - separated_styles/CultureSrf.mss
+  - separated_styles/Emergency.mss
+  - separated_styles/HydrographyCrv.mss
+  - separated_styles/HydrographySrf.mss
+  - separated_styles/InformationPnt.mss
+  - separated_styles/MilStandard2525.mss
+  - separated_styles/RecreationSrf.mss
+  - separated_styles/SettlementSrf.mss
+  - separated_styles/StructurePnt.mss
+  - separated_styles/TransportationGroundCrv.mss
+  - separated_styles/UtilityInfrastructureCrv.mss
+  - separated_styles/UtilityInfrastructurePnt.mss
+  - separated_styles/VegetationSrf.mss
    
 Layer:
   - id: world
