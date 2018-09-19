@@ -987,7 +987,7 @@
       <TextSymbolizer allow-overlap="true" dx="0" dy="18" face-name="Open Sans Regular" fill="#000000" halo-fill="#ffffff" halo-radius="1" opacity="1" size="12"><![CDATA[Pylon]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MaxScaleDenominator>100000</MaxScaleDenominator>
       <MinScaleDenominator>25000</MinScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AT042') and ([OSM_T_POW] = 'tower')]]></Filter>
       <MarkersSymbolizer allow-overlap="true" file="pylon_wilson.svg" width="15" />
@@ -1024,14 +1024,15 @@
       <MarkersSymbolizer file="PT_Black_School.svg" height="20" width="20" />
     </Rule>
     <Rule>
-      <MaxScaleDenominator>400000</MaxScaleDenominator>
-      <MinScaleDenominator>100000</MinScaleDenominator>
-      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
-      <MarkersSymbolizer file="building1.svg" height="5" width="5" />
-    </Rule>
-    <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
       <MarkersSymbolizer file="building1.svg" height="15" width="15" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>400000</MaxScaleDenominator>
+      <MinScaleDenominator>200000</MinScaleDenominator>
+      <Filter><![CDATA[([F_CODE] = 'AL013') and ([OSM_T_AME] = 'public_building')]]></Filter>
+      <MarkersSymbolizer file="building1.svg" height="5" width="5" />
     </Rule>
     <Rule>
       <MaxScaleDenominator>400000</MaxScaleDenominator>
@@ -1106,10 +1107,12 @@
   </Layer>
   <Style filter-mode="first" name="emergency">
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([type] = 'info_point')]]></Filter>
       <MarkersSymbolizer file="public-information.svg" height="25" width="25" />
     </Rule>
     <Rule>
+      <MaxScaleDenominator>200000</MaxScaleDenominator>
       <Filter><![CDATA[([type] = 'reunification')]]></Filter>
       <MarkersSymbolizer file="civilian-staging-transit.svg" height="25" width="25" />
     </Rule>
