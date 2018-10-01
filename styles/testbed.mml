@@ -1,0 +1,182 @@
+scale: 1
+metatile: 2
+name: Testbed 14 Demo
+description: Demonstration data for Testbed 14
+bounds: &world
+  - -180
+  - -85.05112877980659
+  - 180
+  - 85.05112877980659
+center:
+  - 36.1
+  - 32.616667
+  - 12
+format: png
+interactivity: false
+minzoom: 0
+maxzoom: 20
+srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+
+# Various parts to be included later on
+_parts:
+  # Extents are used for tilemill, and don't actually make it to the generated XML
+  extents: &extents
+    extent: *world
+    srs-name: "EPSG:3857"
+    srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+  extents84: &extents84
+    extent: *world
+    srs-name: "WGS84"
+    srs: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+
+Stylesheet:
+  - testbed.mss
+  - separated_styles/agriculturesrf.mss
+  - separated_styles/bridges.mss
+  - separated_styles/culturesrf.mss
+  - separated_styles/emergency.mss
+  - separated_styles/hydrographycrv.mss
+  - separated_styles/hydrographysrf.mss
+  - separated_styles/informationpnt.mss
+  - separated_styles/milstandard2525.mss
+  - separated_styles/recreationsrf.mss
+  - separated_styles/settlementsrf.mss
+  - separated_styles/structurepnt.mss
+  - separated_styles/transportationgroundcrv.mss
+  - separated_styles/utilityinfrastructurecrv.mss
+  - separated_styles/utilityinfrastructurepnt.mss
+  - separated_styles/vegetationsrf.mss
+
+
+
+   
+Layer:
+  - id: world
+    geometry: polygon
+    <<: *extents84
+    Datasource:
+      file: ../data/10m_physical/ne_10m_land.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: settlementsrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/settlementsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: vegetationsrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/vegetationsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20	  
+  - id: agriculturesrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/agriculturesrf.shp
+      type: shape
+    properties:
+      maxzoom: 20	  
+  - id: culturesrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/culturesrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+
+  - id: hydrographycrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/hydrographycrv.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: hydrographysrf
+    geometry: polygon
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/hydrographysrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: recreationsrf
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/recreationsrf.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: informationpnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/informationpnt.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: bridges
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/bridges.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: transportationgroundcrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/transportationgroundcrv.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: utilityinfrastructurecrv
+    geometry: linestring
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/utilityinfrastructurecrv.shp
+      type: shape
+    properties:
+      maxzoom: 20	
+  - id: utilityinfrastructurepnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/utilityinfrastructurepnt.shp
+      type: shape
+    properties:
+      maxzoom: 20	  
+  - id: structurepnt
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/structurepnt.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: military 
+    geometry: point
+    <<: *extents84
+    Datasource:
+      file: ../data/10m_physical/military.shp
+      type: shape
+    properties:
+      maxzoom: 20
+  - id: emergency
+    geometry: point
+    <<: *extents
+    Datasource:
+      file: ../data/10m_physical/emergency.shp
+      type: shape
+    properties:
+      maxzoom: 20
