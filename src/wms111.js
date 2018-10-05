@@ -1,5 +1,6 @@
 // Very basic WMS 1.1.1 implementation
 const builder = require('xmlbuilder');
+const Capabilities = require('./wms111/capabilities');
 const mapnik  = require('mapnik');
 const NAMESPACES = require('./namespaces');
 
@@ -7,140 +8,8 @@ const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
 // Generate a GetCapabilities document based on the given configuration
 function GetCapabilities(config) {
-  let xml = builder.create({
-    WMT_MS_Capabilities: {
-      "@version": "1.1.1",
-      Service: {
-        Name: {
-          "#text": "OGC:WMS"
-        },
-        Title: {
-          "#text": config.title
-        },
-        Abstract: {
-          "#text": config.abstract
-        },
-        OnlineResource: {
-          "@xmlns:xlink": NAMESPACES.XLINK,
-          "@xlink:type": "simple",
-          "@xlink:href": config.host
-        }
-      },
-
-      Capability: {
-        Request: {
-          GetCapabilities: {
-            Format: {
-              "#text": "application/vnd.ogc.wms_xml"
-            },
-            DCPType: {
-              HTTP: {
-                Get: {
-                  OnlineResource: {
-                    "@xmlns:xlink": NAMESPACES.XLINK,
-                    "@xlink:type": "simple",
-                    "@xlink:href": config.host + '/service?'
-                  }
-                }
-              }
-            }
-          },
-
-          GetMap: GetCapabilitiesGetMapObject(config)
-        },
-
-        Exception: {
-          // To create multiple elements of the same name, use an array
-          // and xmlbuilder will handle it.
-          Format: [
-            { "#text": "application/vnd.ogc.se_xml" },
-            { "#text": "application/vnd.ogc.se_inimage" },
-            { "#text": "application/vnd.ogc.se_blank" }
-          ]
-        },
-
-        // Layers
-        Layer: GetCapabilitiesLayersObject(config)
-      }
-    }
-  }, {
-    version: '1.0',
-    encoding: 'UTF-8',
-    standalone: false
-  }, {
-    sysID: NAMESPACES.WMS_111_SCHEMA
-  });
-
-  return xml.end({ pretty: true });
-}
-
-// Generate a subsection for the GetMap requests
-function GetCapabilitiesGetMapObject(config) {
-  let node = {
-    Format: []
-  };
-
-  // Add supported formats
-  let formats = [];
-  config.layers.forEach((layer) => {
-    layer.formats.forEach((format) => {
-      if (!formats.includes(format)) {
-        formats.push(format);
-      }
-    });
-  });
-
-  node.Format = formats;
-
-  node.DCPType = {
-    HTTP: {
-      Get: {
-        OnlineResource: {
-          "@xmlns:xlink": NAMESPACES.XLINK,
-          "@xlink:type": "simple",
-          "@xlink:href": config.host + '/service?'
-        }
-      }
-    }
-  };
-
-  return node;
-}
-
-// Generate the Layer(s) subsection for all layers defined in `config`
-function GetCapabilitiesLayersObject(config) {
-  let node = config.layers.map((layer) => {
-    let layerElement = {
-      Name: { "#text": layer.name },
-      Title: { "#text": layer.title },
-      SRS: { "#text": "EPSG:3857" },
-      LatLonBoundingBox: {
-        "@minx": layer.bbox[0],
-        "@miny": layer.bbox[1],
-        "@maxx": layer.bbox[2],
-        "@maxy": layer.bbox[3]
-      },
-
-      BoundingBox: layer.bounds.map((extent) => {
-        return {
-          "@SRS": extent.srs,
-          "@minx": extent.bbox[0],
-          "@miny": extent.bbox[1],
-          "@maxx": extent.bbox[2],
-          "@maxy": extent.bbox[3]
-        };
-      }),
-
-      Layer: {
-        Name: { "#text": layer.name },
-        Title: { "#text": layer.title }
-      }
-    };
-
-    return layerElement;
-  });
-
-  return node;
+  let capabilities = new Capabilities(config);
+  return capabilities.generate();
 }
 
 function validateGetMap(config, query) {
