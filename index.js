@@ -1,6 +1,7 @@
 const Compiler    = require('./src/carto_compiler');
 const express     = require('express');
 const fs          = require('fs');
+const logger      = require('morgan');
 const MapnikStyle = require('./src/mapnik_style');
 const path        = require('path');
 const WMS         = require('./src/wms111');
@@ -82,7 +83,17 @@ let service = {
 
 let wms = new WMS(service);
 
+// Create log directory
+if (!fs.existsSync('log')) {
+  fs.mkdirSync('log');
+}
+
+// Create log streams
+let accessLogStream = fs.createWriteStream(
+  path.join(__dirname, 'log', 'access.log'), { flags: 'a' });
+
 // Start HTTP Server
+app.use(logger('combined', { stream: accessLogStream }));
 app.get(/\/service\??/, (req, res) => {
   wms.respondTo(req).then((wmsResponse) => {
     res.set(wmsResponse.headers);
