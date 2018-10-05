@@ -1,6 +1,7 @@
 // Very basic WMS 1.1.1 implementation
 const builder = require('xmlbuilder');
 const mapnik  = require('mapnik');
+const NAMESPACES = require('./namespaces');
 
 const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
@@ -20,7 +21,7 @@ function GetCapabilities(config) {
           "#text": config.abstract
         },
         OnlineResource: {
-          "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+          "@xmlns:xlink": NAMESPACES.XLINK,
           "@xlink:type": "simple",
           "@xlink:href": config.host
         }
@@ -36,7 +37,7 @@ function GetCapabilities(config) {
               HTTP: {
                 Get: {
                   OnlineResource: {
-                    "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+                    "@xmlns:xlink": NAMESPACES.XLINK,
                     "@xlink:type": "simple",
                     "@xlink:href": config.host + '/service?'
                   }
@@ -67,7 +68,7 @@ function GetCapabilities(config) {
     encoding: 'UTF-8',
     standalone: false
   }, {
-    sysID: 'http://schemas.opengis.net/wms/1.1.1/capabilities_1_1_1.dtd'
+    sysID: NAMESPACES.WMS_111_SCHEMA
   });
 
   return xml.end({ pretty: true });
@@ -95,7 +96,7 @@ function GetCapabilitiesGetMapObject(config) {
     HTTP: {
       Get: {
         OnlineResource: {
-          "@xmlns:xlink": "http://www.w3.org/1999/xlink",
+          "@xmlns:xlink": NAMESPACES.XLINK,
           "@xlink:type": "simple",
           "@xlink:href": config.host + '/service?'
         }
