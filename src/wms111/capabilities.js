@@ -7,8 +7,6 @@ const NAMESPACES = require('../namespaces');
  * @class      Capabilities (name)
  */
 class Capabilities {
-
-
 	/**
 	 * Creates a Capabilities object with various configuration 
 	 * parameters.

@@ -3,7 +3,7 @@ const express     = require('express');
 const fs          = require('fs');
 const MapnikStyle = require('./src/mapnik_style');
 const path        = require('path');
-const wms         = require('./src/wms111');
+const WMS         = require('./src/wms111');
 
 let app = express();
 
@@ -80,9 +80,11 @@ let service = {
   ]
 };
 
+let wms = new WMS(service);
+
 // Start HTTP Server
 app.get(/\/service\??/, (req, res) => {
-  wms(service, req.query).then((wmsResponse) => {
+  wms.respondTo(req).then((wmsResponse) => {
     res.set(wmsResponse.headers);
     res.status(wmsResponse.code);
     res.send(wmsResponse.data);

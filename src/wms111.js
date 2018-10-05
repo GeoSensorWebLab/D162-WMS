@@ -1,153 +1,192 @@
-// Very basic WMS 1.1.1 implementation
-const builder = require('xmlbuilder');
 const Capabilities = require('./wms111/capabilities');
 const mapnik  = require('mapnik');
-const NAMESPACES = require('./namespaces');
 
 const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
-// Generate a GetCapabilities document based on the given configuration
-function GetCapabilities(config) {
-  let capabilities = new Capabilities(config);
-  return capabilities.generate();
-}
+/**
+ * Class for WMS 1.1.1 server.
+ *
+ * @class      WMS (name)
+ */
+class WMS {
+  /**
+   * Initialize a WMS 1.1.1 object that can handle requests and send
+   * back responses.
+   *
+   * @param      {Object}  config  The configuration
+   */
+  constructor(config) {
+    this.config = config;
+    this.capabilities = new Capabilities(this.config);
+  }
 
-function validateGetMap(config, query) {
-  return new Promise((resolve, reject) => {
-    let errors = [];
+  /**
+   * For the given request, determine what type of response to 
+   * send.
+   *
+   * @param      {string}  request   The Request from the client.
+   * @return     {Promise} Promise object with response data.
+   */
+  respondTo(request) {
+    let query = this.cleanParams(request.query);
 
-    if (query.VERSION === undefined || query.VERSION !== '1.1.1') {
-      errors.push('invalid VERSION');
-    }
+    let response = new Promise((resolve, reject) => {
 
-    if (query.LAYERS === undefined) {
-      errors.push('missing LAYERS');
-    }
-
-    let validLayers = config.layers.map((l) => { return l.name; });
-
-    query.LAYERS.split(',').forEach((queryLayer) => {
-      if (!validLayers.includes(queryLayer)) {
-        errors.push(`invalid LAYERS "${queryLayer}"`);
-      }
-    });
-
-    if (query.STYLES === undefined) {
-      errors.push('missing STYLES');
-    }
-
-    if (query.SRS === undefined) {
-      errors.push('missing SRS');
-    }
-
-    if (query.BBOX === undefined) {
-      errors.push('missing BBOX');
-    }
-
-    if (query.WIDTH === undefined) {
-      errors.push('missing WIDTH');
-    }
-
-    if (query.HEIGHT === undefined) {
-      errors.push('missing HEIGHT');
-    }
-
-    if (query.FORMAT === undefined) {
-      errors.push('missing FORMAT');
-    }
-
-    if (errors.length === 0) {
-      resolve(query);
-    } else {
-      reject(errors);
-    }
-  });
-}
-
-// Convert all query parameter keys to UPPERCASE
-function cleanParams(params) {
-  let newParams = {};
-  Object.entries(params).forEach((pair) => {
-    newParams[pair[0].toUpperCase()] = pair[1];
-  });
-
-  return newParams;
-}
-
-const wms = function(config, query) {
-  query = cleanParams(query);
-
-  let response = new Promise((resolve, reject) => {
-
-    // Check for invalid parameters
-    if (query.REQUEST === undefined || !validRequests.includes(query.REQUEST.toLowerCase())) {
-      resolve({
-        headers: { "Content-Type": "text/plain" },
-        code: 400,
-        data: "Bad Request - invalid request parameter"
-      });
-      } else if (query.REQUEST.toLowerCase() === "capabilities") {
-      console.log("capabilities");
-      resolve({
-        headers: { "Content-Type": "application/vnd.ogc.wms_xml" },
-        code: 200,
-        data: GetCapabilities(config)
-      });
-    } else if (query.REQUEST.toLowerCase() === "getcapabilities") {
-      console.log("GetCapabilities");
-      resolve({
-        headers: { "Content-Type": "application/vnd.ogc.wms_xml" },
-        code: 200,
-        data: GetCapabilities(config)
-      });
-    } else if (query.REQUEST.toLowerCase() === "getmap") {
-      console.log("GetMap", query);
-
-      validateGetMap(config, query).then((query) => {
-        console.log("Good GetMap");
-
-        // Composite images for each layer
-        let buffers = query.LAYERS.split(',').map((queryLayer) => {
-          let layer = config.layers.find((l) => { return l.name === queryLayer; });
-          return layer.getMap(query);
-        });
-
-        Promise.all(buffers).then((buffers) => {
-          mapnik.blend(buffers, (err, result) => {
-            if (err) {
-              resolve({
-                headers: { "Content-Type": "text/plain" },
-                code: 500,
-                data: `Error ${err}`
-              });
-            } else {
-              resolve({
-                headers: { "Content-Type": query.FORMAT },
-                code: 200,
-                data: result
-              })
-            }
-          });
-        }, (error) => {
-          resolve({
-            headers: { "Content-Type": "text/plain" },
-            code: 500,
-            data: `Error ${error}`
-          });
-        });
-
-      }, (errors) => {
-        console.log("Bad GetMap", errors);
+      // Check for invalid parameters
+      if (query.REQUEST === undefined || !validRequests.includes(query.REQUEST.toLowerCase())) {
+        // TODO: Use Service Exception
         resolve({
           headers: { "Content-Type": "text/plain" },
           code: 400,
-          data: "Bad Request\n" + errors.join("\n")
+          data: "Bad Request - invalid request parameter"
         });
-      });
-    }
-  });
+        } else if (query.REQUEST.toLowerCase() === "capabilities") {
+        resolve({
+          headers: { "Content-Type": "application/vnd.ogc.wms_xml" },
+          code: 200,
+          data: this.buildCapabilities()
+        });
+      } else if (query.REQUEST.toLowerCase() === "getcapabilities") {
+        resolve({
+          headers: { "Content-Type": "application/vnd.ogc.wms_xml" },
+          code: 200,
+          data: this.buildCapabilities()
+        });
+      } else if (query.REQUEST.toLowerCase() === "getmap") {
 
-  return response;
+        this.validateGetMap(config, query).then((query) => {
+          // Composite images for each layer
+          let buffers = query.LAYERS.split(',').map((queryLayer) => {
+            let layer = config.layers.find((l) => { return l.name === queryLayer; });
+            return layer.getMap(query);
+          });
+
+          Promise.all(buffers).then((buffers) => {
+            mapnik.blend(buffers, (err, result) => {
+              if (err) {
+                // TODO: Use Service Exception
+                resolve({
+                  headers: { "Content-Type": "text/plain" },
+                  code: 500,
+                  data: `Error ${err}`
+                });
+              } else {
+                resolve({
+                  headers: { "Content-Type": query.FORMAT },
+                  code: 200,
+                  data: result
+                })
+              }
+            });
+          }, (error) => {
+            // TODO: Use Service Exception
+            resolve({
+              headers: { "Content-Type": "text/plain" },
+              code: 500,
+              data: `Error ${error}`
+            });
+          });
+
+        }, (errors) => {
+          // TODO: Use Service Exception
+          console.log("Bad GetMap", errors);
+          resolve({
+            headers: { "Content-Type": "text/plain" },
+            code: 400,
+            data: "Bad Request\n" + errors.join("\n")
+          });
+        });
+      }
+    });
+
+    return response;
+  }
+
+  /**
+   * Create a capabilities document, using the configuration of this
+   * WMS as details.
+   *
+   * @return     {XML Document}  The capabilities XML document.
+   */
+  buildCapabilities() {
+    return this.capabilities.generate();
+  }
+
+  /**
+   * Convert keys in parameters object to all uppercase, to simplify
+   * comparisons.
+   *
+   * @param      {Object}  query  The query parameters
+   * @return     {Object}  The updated query parameters
+   */
+  cleanParams(query) {
+    let newParams = {};
+    Object.entries(query).forEach((pair) => {
+      newParams[pair[0].toUpperCase()] = pair[1];
+    });
+
+    return newParams;
+  }
+
+  /**
+   * Validate that the query parameters are valid for a GetMap request.
+   * Returns a Promise.
+   *
+   * @param      {Object}  query   The query parameters.
+   * @return     {Promise} Promise that resolves if valid, rejects if
+   *                       invalid.
+   */
+  validateGetMap(query) {
+    return new Promise((resolve, reject) => {
+      let errors = [];
+
+      if (query.VERSION === undefined || query.VERSION !== '1.1.1') {
+        errors.push('invalid VERSION');
+      }
+
+      if (query.LAYERS === undefined) {
+        errors.push('missing LAYERS');
+      }
+
+      let validLayers = config.layers.map((l) => { return l.name; });
+
+      query.LAYERS.split(',').forEach((queryLayer) => {
+        if (!validLayers.includes(queryLayer)) {
+          errors.push(`invalid LAYERS "${queryLayer}"`);
+        }
+      });
+
+      if (query.STYLES === undefined) {
+        errors.push('missing STYLES');
+      }
+
+      if (query.SRS === undefined) {
+        errors.push('missing SRS');
+      }
+
+      if (query.BBOX === undefined) {
+        errors.push('missing BBOX');
+      }
+
+      if (query.WIDTH === undefined) {
+        errors.push('missing WIDTH');
+      }
+
+      if (query.HEIGHT === undefined) {
+        errors.push('missing HEIGHT');
+      }
+
+      if (query.FORMAT === undefined) {
+        errors.push('missing FORMAT');
+      }
+
+      if (errors.length === 0) {
+        resolve(query);
+      } else {
+        reject(errors);
+      }
+    });
+  }
 }
 
-module.exports = wms;
+module.exports = WMS;
