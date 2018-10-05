@@ -43,7 +43,7 @@ $ brew cask install font-dejavu-sans font-noto-sans-cjk font-noto-sans font-hana
 
 ## Development Setup with Docker
 
-Instructions for developing the CartoCSS stylesheets using Docker are detailed in the `DOCKER.markdown` document. This is probably the easiest way to get started on Windows, where setting up dependencies can be difficult.
+Instructions for developing the CartoCSS stylesheets using Docker are detailed in the `documentation/DOCKER.markdown` document. This is probably the easiest way to get started on Windows, where setting up dependencies can be difficult.
 
 The instructions below on running the WMS, compiling stylesheets, and using kosmtik are explained in the Docker document.
 
