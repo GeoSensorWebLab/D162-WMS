@@ -1,111 +1,33 @@
 # Example WMS for Testbed 14
 
-A WMS that implements the conceptual model from D160. This demonstrates that the conceptual model is portable to different mapping services.
+A WMS that implements the conceptual model from D160. This demonstrates that the conceptual model is portable to different mapping services and different encodings. In this case, the encoding is [CartoCSS][] that is translated into [Mapnik][] XML.
 
-## Usage
+[CartoCSS]: https://github.com/mapbox/carto
+[Mapnik]: https://mapnik.org
 
-A production WMS is online at http://testbed.gswlab.ca:3000/service. Kosmtik can be viewed at http://testbed.gswlab.ca:7000.
+## Previewing the WMS
 
-The WMS will automatically update the displayed map when any data in the `styles` directory is modified, excluding the Mapnik XML files. To disabled this behaviour, add `WATCH=false` as an environment variable when starting the server.
+For testbed participants and observers, a production WMS is online at [http://testbed.gswlab.ca:3000/service](http://testbed.gswlab.ca:3000/service). This service is WMS 1.1.1 in Node.js and renders map images on-the-fly using Mapnik (no caching). It has been tested with QGIS 2/3.
+
+Stylesheets were developed in CartoCSS and a live tile preview server ([Kosmtik][]) can be viewed at [http://testbed.gswlab.ca:7000](http://testbed.gswlab.ca:7000). This service is an OpenStreetMap-like tile service that is not a standard.
 
 **Note**: It is no longer necessary to use "Ignore GetMap/GetTile URI reported in capabilities" in QGIS with this WMS.
 
+[Kosmtik]: https://github.com/kosmtik/kosmtik
+
 ## Deployment to Production Server
 
-Our production deployment is a cloud server running Ubuntu Server 18.04 LTS. It has a default `ubuntu` user, which has this repository cloned in its home directory (`/home/ubuntu/d162-wms`). [NVM][] is installed to set up Node v8. SSH is used to set up NVM, Node, and then install the node modules.
-
-There are systemd unit scripts in the `init` directory that are useful for managing the WMS and kosmtik instances.
-
-When running under production, it may be necessary to modify the default HTTP host that is reported to clients in the Capabilities document. This can be done when starting the server:
-
-```sh
-$ HOST="testbed.gswlab.ca" node index.js
-```
-
-This can also be modified in the `init/wms.service` script for systemd.
-
-Certain fonts are neede for the renderer, and can be installed using apt:
-
-```sh
-$ sudo apt update
-$ sudo apt install fontconfig fonts-dejavu-core fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-open-sans
-$ sudo fc-cache -f -v
-```
-
-Instructions for MacOS using homebrew:
-
-```sh
-$ brew update
-$ brew cask install font-dejavu-sans font-noto-sans-cjk font-noto-sans font-hanamina font-gnu-unifont font-open-sans
-```
-
-[NVM]: https://github.com/creationix/nvm
+See the production deployment instructions in [documentation/deployment.markdown](documentation/deployment.markdown).
 
 ## Development Setup with Docker
 
-Instructions for developing the CartoCSS stylesheets using Docker are detailed in the `documentation/DOCKER.markdown` document. This is probably the easiest way to get started on Windows, where setting up dependencies can be difficult.
+Instructions for developing the CartoCSS stylesheets using Docker are detailed in the [documentation/docker.markdown](documentation/docker.markdown) document. This is probably the easiest way to get started on Windows, where setting up dependencies can be difficult.
 
 The instructions below on running the WMS, compiling stylesheets, and using kosmtik are explained in the Docker document.
 
 ## Development Setup (No Docker)
 
-This app is built on Node.js and Mapnik. You *may* need to install Mapnik development libraries for your OS separately.
-
-Start by downloading and installing the latest stable version of [Node.js][]. Then use Git to clone this repository from GitHub, or download an archive of this repository.
-
-```sh
-$ git clone https://github.com/openfirmware/D162-WMS
-```
-
-Use NPM to install the dependencies:
-
-```sh
-$ cd D162-WMS
-$ npm install
-```
-
-**If** you are using MacOS >= 10.10, or Ubuntu "Trusty" or newer, then the install should work automatically.
-
-[Node.js]: https://nodejs.org/
-
-### If a Binary Install Doesn't Work
-
-Other Mac/Linux users will likely have to install a C++11 compiler before node-mapnik installs.
-
-**Windows Users** need to [download a Visual C++ redist package][vcredist].
-
-All these users will have to install Mapnik on their system, at least version 3.0.20, and have the `mapnik-config` tool in their shell PATH.
-
-[vcredist]: https://github.com/mapnik/node-mapnik#windows-specific
-
-### NPM Install Works
-
-Once the dependencies install successfully, you can start compiling stylesheets and previewing them.
-
-To download the data sources for shapefiles:
-
-```sh
-$ node get-data.js
-```
-
-To compile all the `.mml` files in the `styles` directory into `.xml` files for mapnik:
-
-```sh
-$ node compile.js
-```
-
-To test that Mapnik will render a map to an image:
-
-```sh
-$ cd scripts
-$ node test-mapnik.js
-```
-
-To start the WMS on port 3000, localhost:
-
-```sh
-$ node index.js
-```
+See the development instructions in [documentation/development.markdown](documentation/development.markdown).
 
 ### Editing the Stylesheet
 
@@ -121,7 +43,7 @@ The XML stylesheet is generated by combining the `mss` and `mml` files and shoul
 $ node compile.js
 ```
 
-To set up live refresh of the stylesheets, use [kosmtik][] to set up a testing server. In the following examples the CartoCSS project is named `styles/nedat.mml`; for a different stylesheet, pass in the path to it instead. For Docker users, only files in the `styles` and `data` directory will have live sync enabled.
+To set up live refresh of the stylesheets, use [Kosmtik][] to set up a testing server. In the following examples the CartoCSS project is named `styles/nedat.mml`; for a different stylesheet, pass in the path to it instead. For Docker users, only files in the `styles` and `data` directory will have live sync enabled.
 
 ```sh
 $ kosmtik serve styles/nedata.mml
@@ -129,7 +51,7 @@ $ kosmtik serve styles/nedata.mml
 
 Now editing the `nedata.mml` file or any stylesheet linked from that project file will automatically be updated by kosmtik in the browser. Adding files to the `data` directory *may* auto reload; I am not 100% sure about that and it may be necessary to refresh the browser page for kosmtik.
 
-[kosmtik]: https://github.com/kosmtik/kosmtik
+The WMS will automatically update the displayed map when any data in the `styles` directory is modified, excluding the Mapnik XML files. To disabled this behaviour, add `WATCH=false` as an environment variable when starting the server.
 
 ## License
 
