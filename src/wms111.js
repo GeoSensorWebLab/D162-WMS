@@ -1,12 +1,11 @@
 const Capabilities = require('./wms111/capabilities');
 const mapnik  = require('mapnik');
+const ServiceException = require('./wms111/service_exception');
 
 const validRequests = ['capabilities', 'getcapabilities', 'getmap'];
 
 /**
  * Class for WMS 1.1.1 server.
- *
- * @class      WMS (name)
  */
 class WMS {
   /**
@@ -34,11 +33,10 @@ class WMS {
 
       // Check for invalid parameters
       if (query.REQUEST === undefined || !validRequests.includes(query.REQUEST.toLowerCase())) {
-        // TODO: Use Service Exception
         resolve({
-          headers: { "Content-Type": "text/plain" },
+          headers: { "Content-Type": "application/vnd.ogc.se_xml" },
           code: 400,
-          data: "Bad Request - invalid request parameter"
+          data: this.buildException("Bad Request - invalid request parameter")
         });
         } else if (query.REQUEST.toLowerCase() === "capabilities") {
         resolve({
@@ -64,11 +62,10 @@ class WMS {
           Promise.all(buffers).then((buffers) => {
             mapnik.blend(buffers, (err, result) => {
               if (err) {
-                // TODO: Use Service Exception
                 resolve({
-                  headers: { "Content-Type": "text/plain" },
+                  headers: { "Content-Type": "application/vnd.ogc.se_xml" },
                   code: 500,
-                  data: `Error ${err}`
+                  data: this.buildException(`Error ${err}`)
                 });
               } else {
                 resolve({
@@ -79,21 +76,19 @@ class WMS {
               }
             });
           }, (error) => {
-            // TODO: Use Service Exception
             resolve({
-              headers: { "Content-Type": "text/plain" },
+              headers: { "Content-Type": "application/vnd.ogc.se_xml" },
               code: 500,
-              data: `Error ${error}`
+              data: this.buildException(`Error ${error}`)
             });
           });
 
         }, (errors) => {
-          // TODO: Use Service Exception
           console.log("Bad GetMap", errors);
           resolve({
-            headers: { "Content-Type": "text/plain" },
+            headers: { "Content-Type": "application/vnd.ogc.se_xml" },
             code: 400,
-            data: "Bad Request\n" + errors.join("\n")
+            data: this.buildException("Bad Request\n" + errors.join("\n"))
           });
         });
       }
@@ -110,6 +105,17 @@ class WMS {
    */
   buildCapabilities() {
     return this.capabilities.generate();
+  }
+
+  /**
+   * Generates a ServiceException document for a given reason.
+   *
+   * @param      {string}  reason  The reason for the exception.
+   * @return     {XML Document}  The Service Exception XML Document.
+   */
+  buildException(reason) {
+    let exception = new ServiceException(reason);
+    return exception.generate();
   }
 
   /**

@@ -3,8 +3,6 @@ const NAMESPACES = require('../namespaces');
 
 /**
  * Class for WMS 1.1.1 capabilities.
- *
- * @class      Capabilities (name)
  */
 class Capabilities {
 	/**
@@ -67,9 +65,9 @@ class Capabilities {
 		        // To create multiple elements of the same name, use an array
 		        // and xmlbuilder will handle it.
 		        Format: [
-		          { "#text": "application/vnd.ogc.se_xml" },
-		          { "#text": "application/vnd.ogc.se_inimage" },
-		          { "#text": "application/vnd.ogc.se_blank" }
+		          { "#text": "application/vnd.ogc.se_xml" }
+		          // { "#text": "application/vnd.ogc.se_inimage" },
+		          // { "#text": "application/vnd.ogc.se_blank" }
 		        ]
 		      },
 
@@ -91,7 +89,6 @@ class Capabilities {
 	/**
 	 * Generate a subsection for the GetMap requests.
 	 *
-	 * @class      GetCapabilitiesGetMapObject (name)
 	 * @return     {XML Document}  The GetMap section.
 	 */
 	GetCapabilitiesGetMapObject() {
@@ -130,7 +127,6 @@ class Capabilities {
 	 * Generate the Layer(s) subsection for all layers defined in 
 	 * Capabilities configuration.
 	 *
-	 * @class      GetCapabilitiesLayersObject (name)
 	 * @return     {XML Document}  The Layers section.
 	 */
 	GetCapabilitiesLayersObject() {
