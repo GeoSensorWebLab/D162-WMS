@@ -55,9 +55,7 @@ The WMS will automatically update the displayed map when any data in the `styles
 
 ## License
 
-Copyright University of Calgary, GeoSensorWeb Lab, 2018. All rights reserved.
-
-(To be re-licensed for OGC Testbed in the future.)
+This project is licensed under [Apache 2.0](https://opensource.org/licenses/Apache-2.0).
 
 ## Authors
 
