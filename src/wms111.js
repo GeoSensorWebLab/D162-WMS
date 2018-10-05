@@ -52,10 +52,10 @@ class WMS {
         });
       } else if (query.REQUEST.toLowerCase() === "getmap") {
 
-        this.validateGetMap(config, query).then((query) => {
+        this.validateGetMap(query).then((query) => {
           // Composite images for each layer
           let buffers = query.LAYERS.split(',').map((queryLayer) => {
-            let layer = config.layers.find((l) => { return l.name === queryLayer; });
+            let layer = this.config.layers.find((l) => { return l.name === queryLayer; });
             return layer.getMap(query);
           });
 
@@ -150,17 +150,17 @@ class WMS {
         errors.push('invalid VERSION');
       }
 
-      if (query.LAYERS === undefined) {
+      if (query.LAYERS === undefined || query.LAYERS === "") {
         errors.push('missing LAYERS');
+      } else {
+        let validLayers = this.config.layers.map((l) => { return l.name; });
+
+        query.LAYERS.split(',').forEach((queryLayer) => {
+          if (!validLayers.includes(queryLayer)) {
+            errors.push(`invalid LAYERS "${queryLayer}"`);
+          }
+        });
       }
-
-      let validLayers = config.layers.map((l) => { return l.name; });
-
-      query.LAYERS.split(',').forEach((queryLayer) => {
-        if (!validLayers.includes(queryLayer)) {
-          errors.push(`invalid LAYERS "${queryLayer}"`);
-        }
-      });
 
       if (query.STYLES === undefined) {
         errors.push('missing STYLES');
