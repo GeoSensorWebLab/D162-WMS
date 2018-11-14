@@ -36,5 +36,5 @@ This project is licensed under [Apache 2.0](https://opensource.org/licenses/Apac
 ## Authors
 
 James Badger, University of Calgary (<jpbadger@ucalgary.ca>)  
-Soroush Ojagh, University of Calgary
+Soroush Ojagh, University of Calgary (<soroush.ojagh@ucalgary.ca>) 
 
